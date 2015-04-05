@@ -41,6 +41,9 @@
 #include "ShareWindow.h"
 #include "ShareFileTransfer.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "TransferListView"
+
 namespace beshare {
 
 TransferListView::TransferListView(BRect rect, uint32 banCommand)
@@ -111,17 +114,17 @@ TransferListView::MouseDown(BPoint where)
 
 			BPopUpMenu* popup = new BPopUpMenu((const char *)NULL);
 
-			BMenuItem * moveTop = new BMenuItem(str(STR_MOVE_TO_TOP), NULL);
+			BMenuItem * moveTop = new BMenuItem(B_TRANSLATE(STR_MOVE_TO_TOP), NULL);
 			popup->AddItem(moveTop);
 
-			BMenuItem * moveUp = new BMenuItem(str(STR_MOVE_UP), NULL);
+			BMenuItem * moveUp = new BMenuItem(B_TRANSLATE(STR_MOVE_UP), NULL);
 			popup->AddItem(moveUp);
 
-			BMenuItem * moveDown = new BMenuItem(str(STR_MOVE_DOWN), NULL);
+			BMenuItem * moveDown = new BMenuItem(B_TRANSLATE(STR_MOVE_DOWN), NULL);
 			popup->AddItem(moveDown);
 
 			BMenuItem * moveBottom =
-				new BMenuItem(str(STR_MOVE_TO_BOTTOM), NULL);
+				new BMenuItem(B_TRANSLATE(STR_MOVE_TO_BOTTOM), NULL);
 
 			popup->AddItem(moveBottom);
 
@@ -168,15 +171,15 @@ TransferListView::MouseDown(BPoint where)
  				}
 			}
 
-			BMenuItem * haltDownload = new BMenuItem(str(STR_HALT_DOWNLOAD), NULL);
+			BMenuItem * haltDownload = new BMenuItem(B_TRANSLATE(STR_HALT_DOWNLOAD), NULL);
 			haltDownload->SetEnabled(haltEnabled);
 			popup->AddItem(haltDownload);
 
-			BMenuItem * resumeDownload = new BMenuItem(str(STR_RESTART_DOWNLOAD), NULL);
+			BMenuItem * resumeDownload = new BMenuItem(B_TRANSLATE(STR_RESTART_DOWNLOAD), NULL);
 			resumeDownload->SetEnabled(resumeEnabled);
 			popup->AddItem(resumeDownload);
 
-			BMenu * limitMenu = new BMenu(str(STR_LIMIT_BANDWIDTH));
+			BMenu * limitMenu = new BMenu(B_TRANSLATE(STR_LIMIT_BANDWIDTH));
 			{
 				ShareFileTransfer * xfr = (ShareFileTransfer *) ItemAt(CurrentSelection(0));
 				uint32 currentLimit = xfr ? xfr->GetBandwidthLimit() : 0;
@@ -195,8 +198,8 @@ TransferListView::MouseDown(BPoint where)
 			}
 			popup->AddSeparatorItem();
 
-			BMenu* filesList = new BMenu(str(STR_OPEN_FILE));
-			BMenu* foldersList = new BMenu(str(STR_OPEN_FOLDER));
+			BMenu* filesList = new BMenu(B_TRANSLATE(STR_OPEN_FILE));
+			BMenu* foldersList = new BMenu(B_TRANSLATE(STR_OPEN_FOLDER));
 			{
 				for (int h = 0; (idx = CurrentSelection(h)) >= 0; h++) {
 					if (filesList->CountItems() > 0)
@@ -215,32 +218,32 @@ TransferListView::MouseDown(BPoint where)
 
 			popup->AddSeparatorItem();
 
-			BMenuItem * removeItems = new BMenuItem(str(STR_REMOVE_SELECTED), NULL);
+			BMenuItem * removeItems = new BMenuItem(B_TRANSLATE(STR_REMOVE_SELECTED), NULL);
 			popup->AddItem(removeItems);
 
 			if (canBans.GetNumItems() > 0) {
 				popup->AddSeparatorItem();
- 				BMenu * banUser = new BMenu(str(STR_BAN_USER_FOR));
+ 				BMenu * banUser = new BMenu(B_TRANSLATE(STR_BAN_USER_FOR));
  				popup->AddItem(banUser);
 
  				bigtime_t minute = 60 * 1000000;
-				_AddBanItem(banUser, canBans, 5,str(STR_MINUTES), minute);
- 				_AddBanItem(banUser, canBans, 15, str(STR_MINUTES), minute);
- 				_AddBanItem(banUser, canBans, 30, str(STR_MINUTES), minute);
+				_AddBanItem(banUser, canBans, 5,B_TRANSLATE(STR_MINUTES), minute);
+ 				_AddBanItem(banUser, canBans, 15, B_TRANSLATE(STR_MINUTES), minute);
+ 				_AddBanItem(banUser, canBans, 30, B_TRANSLATE(STR_MINUTES), minute);
 
  				bigtime_t hour = 60 * minute;
- 				_AddBanItem(banUser, canBans, 1,str(STR_HOURS), hour);
- 				_AddBanItem(banUser, canBans, 2,str(STR_HOURS), hour);
- 				_AddBanItem(banUser, canBans, 5,str(STR_HOURS), hour);
- 				_AddBanItem(banUser, canBans, 12, str(STR_HOURS), hour);
+ 				_AddBanItem(banUser, canBans, 1,B_TRANSLATE(STR_HOURS), hour);
+ 				_AddBanItem(banUser, canBans, 2,B_TRANSLATE(STR_HOURS), hour);
+ 				_AddBanItem(banUser, canBans, 5,B_TRANSLATE(STR_HOURS), hour);
+ 				_AddBanItem(banUser, canBans, 12, B_TRANSLATE(STR_HOURS), hour);
 
  				bigtime_t day = 24 * hour;
- 				_AddBanItem(banUser, canBans, 1, str(STR_DAYS), day);
- 				_AddBanItem(banUser, canBans, 2, str(STR_DAYS), day);
- 				_AddBanItem(banUser, canBans, 7, str(STR_DAYS), day);
- 				_AddBanItem(banUser, canBans, 30,str(STR_DAYS), day);
+ 				_AddBanItem(banUser, canBans, 1, B_TRANSLATE(STR_DAYS), day);
+ 				_AddBanItem(banUser, canBans, 2, B_TRANSLATE(STR_DAYS), day);
+ 				_AddBanItem(banUser, canBans, 7, B_TRANSLATE(STR_DAYS), day);
+ 				_AddBanItem(banUser, canBans, 30,B_TRANSLATE(STR_DAYS), day);
 
- 				_AddBanItem(banUser, canBans, -1,str(STR_FOREVER), -1);
+ 				_AddBanItem(banUser, canBans, -1,B_TRANSLATE(STR_FOREVER), -1);
 			}
 
 			ConvertToScreen(&pt);
@@ -442,10 +445,10 @@ TransferListView::_AddLimitItem(BMenu * addTo, uint32 transferRate, uint32 curre
 	TRACE_TRANSFERLISTVIEW(("TransferListView::_AddLimitItem begin\n"));
 	char buf[128];
 	if (transferRate > 0) {
-		sprintf(buf, "%luKB%s", transferRate, str(STR_SEC));
+		sprintf(buf, "%luKB%s", transferRate, B_TRANSLATE(STR_SEC));
 		char * comma = strchr(buf, ','); if (comma) *comma = '\0';
 	} else
-		strcpy(buf, str(STR_NO_LIMIT));
+		strcpy(buf, B_TRANSLATE(STR_NO_LIMIT));
 
 	transferRate *= 1024;// convert into bytes
 	BMessage * msg = new BMessage(LIMIT_BANDWIDTH_COMMAND);

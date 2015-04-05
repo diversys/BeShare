@@ -14,6 +14,9 @@
 #include "ShareWindow.h"
 #include "RemoteUserItem.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ResultsView"
+
 namespace beshare {
 	
 static String RemoveSpecialQueryChars(const String & localString)
@@ -78,7 +81,7 @@ ResultsView::MouseDown(BPoint where)
 				BPopUpMenu * popup = new BPopUpMenu((const char *)NULL);
 				for (int i = 0; i < numPages; i++) {
 					char temp[128];
-					sprintf(temp, "%s %i", str(STR_SWITCH_TO_PAGE), i+1);
+					sprintf(temp, "%s %i", B_TRANSLATE(STR_SWITCH_TO_PAGE), i+1);
 					BMessage * msg = new BMessage(fReplyWhat);
 					msg->AddInt32("page", i);
 					BMenuItem * mi = new BMenuItem(temp, msg);

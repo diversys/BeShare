@@ -3,11 +3,15 @@
 #include <Screen.h>
 #include <LayoutBuilder.h>
 
+
 #include "ShareStrings.h"
 
 #include <santa/CLVEasyItem.h>
 
 namespace beshare {
+
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "PrivateChatWindow"
 
 // Window sizing constraints
 #define MIN_WIDTH  200
@@ -40,11 +44,11 @@ void
 PrivateChatWindow :: UpdateTitleBar()
 {
 	const String & s = GetCustomWindowTitle();
-	SetTitle((s.Length() > 0) ? s() : str(STR_BESHARE_PRIVATE_CHAT));
+	SetTitle((s.Length() > 0) ? s() : B_TRANSLATE(STR_BESHARE_PRIVATE_CHAT));
 }
 
 PrivateChatWindow :: PrivateChatWindow(bool loggingEnabled, const BMessage & msg, uint32 idx, ShareWindow * mainWindow, const char * defaultStr) :
-	ChatWindow(ExtractRect(msg),str(STR_BESHARE_PRIVATE_CHAT),B_FLOATING_WINDOW_LOOK,B_NORMAL_WINDOW_FEEL,0L),
+	ChatWindow(ExtractRect(msg),B_TRANSLATE(STR_BESHARE_PRIVATE_CHAT),B_FLOATING_WINDOW_LOOK,B_NORMAL_WINDOW_FEEL,0L),
 	_index(idx),
 	_mainWindow(mainWindow),
 	_munged(false)
@@ -53,12 +57,12 @@ PrivateChatWindow :: PrivateChatWindow(bool loggingEnabled, const BMessage & msg
 
 	BMessenger toMe(this);
 
-	_logEnabled = new BCheckBox(NULL, str(STR_LOG), NULL);
+	_logEnabled = new BCheckBox(NULL, B_TRANSLATE(STR_LOG), NULL);
 	if (loggingEnabled) _logEnabled->SetValue(B_CONTROL_ON);
 
 	// text control for indicating users stretches all the way across the top of the window
-	_usersEntry = new BTextControl(NULL, str(STR_CHAT_WITH), defaultStr, new BMessage(PRIVATE_WINDOW_USER_TEXT_CHANGED));
-	_usersEntry->SetDivider(_usersEntry->StringWidth(str(STR_CHAT_WITH))+4.0f);
+	_usersEntry = new BTextControl(NULL, B_TRANSLATE(STR_CHAT_WITH), defaultStr, new BMessage(PRIVATE_WINDOW_USER_TEXT_CHANGED));
+	_usersEntry->SetDivider(_usersEntry->StringWidth(B_TRANSLATE(STR_CHAT_WITH))+4.0f);
 	_usersEntry->SetTarget(toMe);
 	_usersEntry->MakeFocus();
 
@@ -70,8 +74,8 @@ PrivateChatWindow :: PrivateChatWindow(bool loggingEnabled, const BMessage & msg
 	CLVContainerView * cv;
 	_usersList = new ColumnListView(BRect(),&cv,NULL,B_FOLLOW_ALL_SIDES, B_WILL_DRAW|B_FRAME_EVENTS|B_NAVIGABLE,B_MULTIPLE_SELECTION_LIST,false,false,true,true,B_FANCY_BORDER);
 
-	_usersList->AddColumn(new CLVColumn(str(STR_NAME), _usersList->Bounds().Width()-ID_WIDTH, CLV_SORT_KEYABLE));
-	_usersList->AddColumn(new CLVColumn(str(STR_ID), ID_WIDTH, CLV_SORT_KEYABLE|CLV_RIGHT_JUSTIFIED));
+	_usersList->AddColumn(new CLVColumn(B_TRANSLATE(STR_NAME), _usersList->Bounds().Width()-ID_WIDTH, CLV_SORT_KEYABLE));
+	_usersList->AddColumn(new CLVColumn(B_TRANSLATE(STR_ID), ID_WIDTH, CLV_SORT_KEYABLE|CLV_RIGHT_JUSTIFIED));
 	_usersList->SetSortFunction((CLVCompareFuncPtr)CompareFunc);
 	BMessage tableMsg;
 	if (msg.FindMessage("table", &tableMsg) == B_NO_ERROR)

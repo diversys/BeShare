@@ -11,6 +11,9 @@
 #include "ShareWindow.h"
 #include "RemoteUserItem.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "UserListView"
+
 namespace beshare {
 UserListView::UserListView(uint32 replyWhat, BRect frame, 
 		CLVContainerView** containerView, const char* name, uint32 resizingMode, 
@@ -69,7 +72,7 @@ UserListView::MouseDown(BPoint where)
 		if (handles.Length() > 0) {
 			BPopUpMenu* popup = new BPopUpMenu((const char *)NULL);
 
-			String s(str(STR_CHAT_WITH));
+			String s(B_TRANSLATE(STR_CHAT_WITH));
             s += ' ';
             s += handles;
             BMenuItem* mi = new BMenuItem(s(), NULL);
@@ -77,7 +80,7 @@ UserListView::MouseDown(BPoint where)
 
             popup->AddSeparatorItem();
 
-            String s2(str(STR_WATCH));
+            String s2(B_TRANSLATE(STR_WATCH));
             s2 += ' ';
             s2 += handles;
             BMenuItem* mi2 = new BMenuItem(s2(), NULL);

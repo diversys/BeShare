@@ -23,6 +23,9 @@
 #include "ShareConstants.h"
 #include "ShareWindow.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ShareNetClient"
+
 namespace beshare {
 
 
@@ -108,7 +111,7 @@ ShareNetClient::ConnectToServer(const char* serverName, uint16 port)
 	} else {
 		TRACE_BESHARENETCLIENT(("ShareNetClient::ConnectToServer else\n"));
 		_mtt->ShutdownInternalThread();
-		((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, str(STR_ERROR_COULDNT_CREATE_CONNECT_THREAD));
+		((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_ERROR_COULDNT_CREATE_CONNECT_THREAD));
 		delete _mtt;
 		_mtt = NULL;
 	}
@@ -331,10 +334,10 @@ MessageReceived(BMessage * msg)
 				if (success)
 				{
 					char buf[100];
-					sprintf(buf, str(STR_SHARING_PERCENTI_LOCAL_FILES), _nameToEntry.GetNumItems());
+					sprintf(buf, B_TRANSLATE(STR_SHARING_PERCENTI_LOCAL_FILES), _nameToEntry.GetNumItems());
 					((ShareWindow*)Looper())->LogMessage(LOG_INFORMATION_MESSAGE, buf);
 				}
-				else ((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, str(STR_COULDNT_FIND_SHARED_SUBDIRECTORY_FILE_SHARING_DISABLED));
+				else ((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_COULDNT_FIND_SHARED_SUBDIRECTORY_FILE_SHARING_DISABLED));
 			}
 			UploadSharedFileCount();
 
@@ -656,7 +659,7 @@ MessageReceived(const MessageRef & msgRef)
 			{
 				String displayString;
 				char temp[512];
-				sprintf(temp, str(STR_PING_REPLY_LIMS), (system_time()-when)/1000LL);
+				sprintf(temp, B_TRANSLATE(STR_PING_REPLY_LIMS), (system_time()-when)/1000LL);
 				displayString = temp;
 
 				const char * version;
@@ -673,11 +676,11 @@ MessageReceived(const MessageRef & msgRef)
 					 (msg->FindInt64("onlinetime", &onlinetime) == B_NO_ERROR))
 				{
 					displayString += " (";
-					displayString += str(STR_SYSTEM_UPTIME);
+					displayString += B_TRANSLATE(STR_SYSTEM_UPTIME);
 					displayString += ": ";
 					displayString += win->MakeTimeElapsedString(uptime);
 					displayString += ", ";
-					displayString += str(STR_LOGGED_IN_FOR);
+					displayString += B_TRANSLATE(STR_LOGGED_IN_FOR);
 					displayString += " ";
 					displayString += win->MakeTimeElapsedString(onlinetime);
 					displayString += ")";

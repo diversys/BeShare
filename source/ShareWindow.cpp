@@ -44,7 +44,8 @@
 #include "RemoteFileItem.h"
 #include "ColorPicker.h"
 
-
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ShareWindow"
 
 namespace beshare {
 
@@ -84,11 +85,11 @@ static const char * _defaultServers[] =
 
 #define SPECIAL_COLUMN_CHAR 0x01
 
-#define FILE_NAME_COLUMN_NAME		str(STR_FILE_NAME_KEY)
-#define FILE_OWNER_COLUMN_NAME	 	str(STR_USER_KEY)
-#define FILE_SESSION_COLUMN_NAME	str(STR_SESSIONID_KEY)
-#define FILE_OWNER_BANDWIDTH_NAME	str(STR_CONNECTION_KEY)
-#define FILE_MODIFICATION_TIME_NAME str(STR_MODIFICATION_TIME)
+#define FILE_NAME_COLUMN_NAME		B_TRANSLATE(STR_FILE_NAME_KEY)
+#define FILE_OWNER_COLUMN_NAME	 	B_TRANSLATE(STR_USER_KEY)
+#define FILE_SESSION_COLUMN_NAME	B_TRANSLATE(STR_SESSIONID_KEY)
+#define FILE_OWNER_BANDWIDTH_NAME	B_TRANSLATE(STR_CONNECTION_KEY)
+#define FILE_MODIFICATION_TIME_NAME B_TRANSLATE(STR_MODIFICATION_TIME)
 
 #define DEFAULT_COLUMN_WIDTH 40.0f
 
@@ -300,36 +301,36 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 
 	_menuBar = new BMenuBar(BRect(), "Menu Bar");
 
-	BMenu * fileMenu = new BMenu(str(STR_FILE));
+	BMenu * fileMenu = new BMenu(B_TRANSLATE(STR_FILE));
 	//BMenu * fileMenu = new BMenu(B_TRANSLATE("File"));
-	fileMenu->AddItem(_connectMenuItem = new BMenuItem(str(STR_CONNECT_TO_SERVER), new BMessage(SHAREWINDOW_COMMAND_RECONNECT_TO_SERVER), shortcut(SHORTCUT_CONNECT)));
-	fileMenu->AddItem(_disconnectMenuItem = new BMenuItem(str(STR_DISCONNECT), new BMessage(SHAREWINDOW_COMMAND_DISCONNECT_FROM_SERVER), shortcut(SHORTCUT_DISCONNECT), B_SHIFT_KEY));
+	fileMenu->AddItem(_connectMenuItem = new BMenuItem(B_TRANSLATE(STR_CONNECT_TO_SERVER), new BMessage(SHAREWINDOW_COMMAND_RECONNECT_TO_SERVER), shortcut(SHORTCUT_CONNECT)));
+	fileMenu->AddItem(_disconnectMenuItem = new BMenuItem(B_TRANSLATE(STR_DISCONNECT), new BMessage(SHAREWINDOW_COMMAND_DISCONNECT_FROM_SERVER), shortcut(SHORTCUT_DISCONNECT), B_SHIFT_KEY));
 	fileMenu->AddItem(new BSeparatorItem);
 
-	fileMenu->AddItem(new BMenuItem(str(STR_OPEN_SHARED_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_SHARED_FOLDER), shortcut(SHORTCUT_OPEN_SHARED_FOLDER)));
-	fileMenu->AddItem(new BMenuItem(str(STR_OPEN_DOWNLOADS_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_DOWNLOADS_FOLDER), shortcut(SHORTCUT_OPEN_DOWNLOADS_FOLDER)));
-	fileMenu->AddItem(new BMenuItem(str(STR_OPEN_LOGS_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_LOGS_FOLDER), shortcut(SHORTCUT_OPEN_LOGS_FOLDER)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_OPEN_SHARED_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_SHARED_FOLDER), shortcut(SHORTCUT_OPEN_SHARED_FOLDER)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_OPEN_DOWNLOADS_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_DOWNLOADS_FOLDER), shortcut(SHORTCUT_OPEN_DOWNLOADS_FOLDER)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_OPEN_LOGS_FOLDER), new BMessage(SHAREWINDOW_COMMAND_OPEN_LOGS_FOLDER), shortcut(SHORTCUT_OPEN_LOGS_FOLDER)));
 	fileMenu->AddItem(new BSeparatorItem);
 
 
-	fileMenu->AddItem(new BMenuItem(str(STR_OPEN_PRIVATE_CHAT_WINDOW), new BMessage(SHAREWINDOW_COMMAND_OPEN_PRIVATE_CHAT_WINDOW), shortcut(SHORTCUT_OPEN_PRIVATE_CHAT_WINDOW)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_OPEN_PRIVATE_CHAT_WINDOW), new BMessage(SHAREWINDOW_COMMAND_OPEN_PRIVATE_CHAT_WINDOW), shortcut(SHORTCUT_OPEN_PRIVATE_CHAT_WINDOW)));
 
-	fileMenu->AddItem(new BMenuItem(str(STR_CLEAR_CHAT_LOG), new BMessage(SHAREWINDOW_COMMAND_CLEAR_CHAT_LOG), shortcut(SHORTCUT_CLEAR_CHAT_LOG)));
-	fileMenu->AddItem(new BMenuItem(str(STR_RESET_LAYOUT), new BMessage(SHAREWINDOW_COMMAND_RESET_LAYOUT), shortcut(SHORTCUT_RESET_LAYOUT)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_CLEAR_CHAT_LOG), new BMessage(SHAREWINDOW_COMMAND_CLEAR_CHAT_LOG), shortcut(SHORTCUT_CLEAR_CHAT_LOG)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_RESET_LAYOUT), new BMessage(SHAREWINDOW_COMMAND_RESET_LAYOUT), shortcut(SHORTCUT_RESET_LAYOUT)));
 	fileMenu->AddItem(new BSeparatorItem);
-	fileMenu->AddItem(new BMenuItem(str(STR_ABOUT_BESHARE), new BMessage(SHAREWINDOW_COMMAND_ABOUT), 0));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_ABOUT_BESHARE), new BMessage(SHAREWINDOW_COMMAND_ABOUT), 0));
 	fileMenu->AddItem(new BSeparatorItem);
-	fileMenu->AddItem(new BMenuItem(str(STR_QUIT), new BMessage(B_QUIT_REQUESTED), shortcut(SHORTCUT_QUIT)));
+	fileMenu->AddItem(new BMenuItem(B_TRANSLATE(STR_QUIT), new BMessage(B_QUIT_REQUESTED), shortcut(SHORTCUT_QUIT)));
 	_menuBar->AddItem(fileMenu);
 
-	_attribMenu = new BMenu(str(STR_ATTRIBUTES));
+	_attribMenu = new BMenu(B_TRANSLATE(STR_ATTRIBUTES));
 	_menuBar->AddItem(_attribMenu);
 
 	// Add save/restore presets submenus to attributes menu
 	{
 		for (uint32 pr=0; pr<ARRAYITEMS(_attribPresets); pr++) if (settingsMsg.FindMessage("attributepresets", pr, &_attribPresets[pr]) != B_NO_ERROR) _attribPresets[pr].what = 0;
-		BMenu * savePresets = new BMenu(str(STR_SAVE_PRESET));
-		BMenu * restorePresets = new BMenu(str(STR_RESTORE_PRESET));
+		BMenu * savePresets = new BMenu(B_TRANSLATE(STR_SAVE_PRESET));
+		BMenu * restorePresets = new BMenu(B_TRANSLATE(STR_RESTORE_PRESET));
 		for (uint32 ps = 1; ps < 1 + ARRAYITEMS(_attribPresets); ps++) {
 			int which = ps % ARRAYITEMS(_attribPresets);
 			savePresets->AddItem(CreatePresetItem(SHAREWINDOW_COMMAND_SAVE_ATTRIBUTE_PRESET, which, true, true));
@@ -341,19 +342,19 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 		_attribMenu->AddSeparatorItem();
 	}
 
-	BMenu * settingsMenu = new BMenu(str(STR_SETTINGS));
+	BMenu * settingsMenu = new BMenu(B_TRANSLATE(STR_SETTINGS));
 	_menuBar->AddItem(settingsMenu);
 
 	bool fw;
 	if ((settingsMsg.FindBool("firewalled", &fw) == B_NO_ERROR)&&(fw))
 		_netClient->SetFirewalled(true);
 
-	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_UPLOAD_LIMIT, str(STR_MAX_SIMULTANEOUS_UPLOADS), "uploads", _maxSimultaneousUploadSessions));
-	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_UPLOAD_PER_USER_LIMIT, str(STR_MAX_SIMULTANEOUS_UPLOADS_PER_USER), "uploadsperuser", _maxSimultaneousUploadSessionsPerUser));
-	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_DOWNLOAD_LIMIT, str(STR_MAX_SIMULTANEOUS_DOWNLOADS), "downloads", _maxSimultaneousDownloadSessions));
-	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_DOWNLOAD_PER_USER_LIMIT, str(STR_MAX_SIMULTANEOUS_DOWNLOADS_PER_USER), "downloadsperuser", _maxSimultaneousDownloadSessionsPerUser));
+	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_UPLOAD_LIMIT, B_TRANSLATE(STR_MAX_SIMULTANEOUS_UPLOADS), "uploads", _maxSimultaneousUploadSessions));
+	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_UPLOAD_PER_USER_LIMIT, B_TRANSLATE(STR_MAX_SIMULTANEOUS_UPLOADS_PER_USER), "uploadsperuser", _maxSimultaneousUploadSessionsPerUser));
+	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_DOWNLOAD_LIMIT, B_TRANSLATE(STR_MAX_SIMULTANEOUS_DOWNLOADS), "downloads", _maxSimultaneousDownloadSessions));
+	settingsMenu->AddItem(MakeLimitSubmenu(settingsMsg, SHAREWINDOW_COMMAND_SET_DOWNLOAD_PER_USER_LIMIT, B_TRANSLATE(STR_MAX_SIMULTANEOUS_DOWNLOADS_PER_USER), "downloadsperuser", _maxSimultaneousDownloadSessionsPerUser));
 
-	BMenu * bMenu = new BMenu(str(STR_UPLOAD_BANDWIDTH));
+	BMenu * bMenu = new BMenu(B_TRANSLATE(STR_UPLOAD_BANDWIDTH));
 	bMenu->SetRadioMode(true);
 	settingsMenu->AddItem(bMenu);
 
@@ -377,10 +378,10 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 
 	bool lu;
 
-	BMenu * filterMenus[NUM_DESTINATIONS] = {new BMenu(str(STR_DISPLAY)), new BMenu(str(STR_LOG))};
+	BMenu * filterMenus[NUM_DESTINATIONS] = {new BMenu(B_TRANSLATE(STR_DISPLAY)), new BMenu(B_TRANSLATE(STR_LOG))};
 	int filterLabels[NUM_FILTERS] = {STR_TIMESTAMPS, STR_USER_EVENTS, STR_UPLOADS, STR_CHAT_NOUN, STR_PRIVATE_MESSAGES, STR_INFO_MESSAGES, STR_WARNING_MESSAGES, STR_ERROR_MESSAGES, STR_USER_NUMBER};
 
-	_toggleFileLogging = new BMenuItem(str(STR_LOGGING_ENABLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FILE_LOGGING), shortcut(SHORTCUT_TOGGLE_FILE_LOGGING));
+	_toggleFileLogging = new BMenuItem(B_TRANSLATE(STR_LOGGING_ENABLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FILE_LOGGING), shortcut(SHORTCUT_TOGGLE_FILE_LOGGING));
 	_toggleFileLogging->SetMarked((settingsMsg.FindBool("filelogging", &lu) == B_NO_ERROR) ? lu : false);
 	filterMenus[DESTINATION_LOG_FILE]->AddItem(_toggleFileLogging);
 	filterMenus[DESTINATION_LOG_FILE]->AddSeparatorItem();
@@ -398,7 +399,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 		settingsMenu->AddItem(filterMenus[f]);
 	}
 
-	BMenu * langMenu = new BMenu(str(STR_LANGUAGE));
+	BMenu * langMenu = new BMenu(B_TRANSLATE(STR_LANGUAGE));
 	langMenu->SetRadioMode(true);
 	settingsMenu->AddItem(langMenu);
 
@@ -416,7 +417,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	{
 		uint32 ps;
 		_pageSize = (settingsMsg.FindInt32("pagesize", (int32*)&ps) == B_NO_ERROR) ? ps : 1000;
-		BMenu * pageSizeMenu = new BMenu(str(STR_RESULTS_PER_PAGE));
+		BMenu * pageSizeMenu = new BMenu(B_TRANSLATE(STR_RESULTS_PER_PAGE));
 		pageSizeMenu->SetRadioMode(true);
 		uint32 pageSizes[] = {500, 1000, 2000, 3000, 5000, 8000, 10000, 100000};
 
@@ -449,7 +450,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 
 		uint32 away;
 		_idleTimeoutMinutes = (settingsMsg.FindInt32("autoaway", (int32*)&away) == B_NO_ERROR) ? away : 0;
-		BMenu * autoAwayMenu = new BMenu(str(STR_AUTO_AWAY));
+		BMenu * autoAwayMenu = new BMenu(B_TRANSLATE(STR_AUTO_AWAY));
 		autoAwayMenu->SetRadioMode(true);
 		uint32 awayTimes[] = {0, 2, 5, 10, 15, 20, 30, 60, 120};
 		for (size_t p = 0; p < ARRAYITEMS(awayTimes); p++) {
@@ -459,9 +460,9 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 
 			char temp[64];
 			if (away > 0)
-				sprintf(temp, "%lu %s", away, str(STR_MINUTES));
+				sprintf(temp, "%lu %s", away, B_TRANSLATE(STR_MINUTES));
 			else
-				strcpy(temp, str(STR_DISABLED));
+				strcpy(temp, B_TRANSLATE(STR_DISABLED));
 
 			BMenuItem * nextAMenu = new BMenuItem(temp, amsg);
 
@@ -479,7 +480,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 		if (settingsMsg.FindInt32("complevel", &compLevel) == B_NO_ERROR)
 			_compressionLevel = compLevel;
 
-		BMenu * dataCompMenu = new BMenu(str(STR_DATA_COMPRESSION));
+		BMenu * dataCompMenu = new BMenu(B_TRANSLATE(STR_DATA_COMPRESSION));
 		dataCompMenu->SetRadioMode(true);
 		const uint32 compLevels[] = {			0,		3,		 6,		9};
 		const int	compLabels[] = {STR_DISABLED, STR_LOW, STR_MEDIUM, STR_HIGH};
@@ -500,46 +501,46 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	for (int ol=0; settingsMsg.FindString("onlogin", ol, &onLogin) == B_NO_ERROR; ol++)
 		_onLoginStrings.AddTail(onLogin);
 
-	_fullUserQueries = new BMenuItem(str(STR_FULL_USER_QUERIES), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FULL_USER_QUERIES), shortcut(SHORTCUT_FULL_USER_QUERIES));
+	_fullUserQueries = new BMenuItem(B_TRANSLATE(STR_FULL_USER_QUERIES), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FULL_USER_QUERIES), shortcut(SHORTCUT_FULL_USER_QUERIES));
 	_fullUserQueries->SetMarked((settingsMsg.FindBool("fulluserqueries", &lu) == B_NO_ERROR) ? lu : true);
 	settingsMenu->AddItem(_fullUserQueries);
 
-	_sharingEnabled = new BMenuItem(str(STR_FILE_SHARING_ENABLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FILE_SHARING_ENABLED), shortcut(SHORTCUT_FILE_SHARING_ENABLED));
+	_sharingEnabled = new BMenuItem(B_TRANSLATE(STR_FILE_SHARING_ENABLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FILE_SHARING_ENABLED), shortcut(SHORTCUT_FILE_SHARING_ENABLED));
 	_sharingEnabled->SetMarked((settingsMsg.FindBool("filesharingenabled", &lu) != B_NO_ERROR)||(lu));
 	settingsMenu->AddItem(_sharingEnabled);
 
-	_shortestUploadsFirst = new BMenuItem(str(STR_SHORTEST_UPLOADS_FIRST), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_SHORTEST_UPLOADS_FIRST));
+	_shortestUploadsFirst = new BMenuItem(B_TRANSLATE(STR_SHORTEST_UPLOADS_FIRST), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_SHORTEST_UPLOADS_FIRST));
 	_shortestUploadsFirst->SetMarked((settingsMsg.FindBool("shortestfirst", &lu) == B_NO_ERROR) ? lu : true);
 	settingsMenu->AddItem(_shortestUploadsFirst);
 
-	_autoClearCompletedDownloads = new BMenuItem(str(STR_AUTOCLEAR_COMPLETED_DOWNLOADS), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_AUTOCLEAR_COMPLETED_DOWNLOADS), 0);
+	_autoClearCompletedDownloads = new BMenuItem(B_TRANSLATE(STR_AUTOCLEAR_COMPLETED_DOWNLOADS), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_AUTOCLEAR_COMPLETED_DOWNLOADS), 0);
 	if (settingsMsg.FindBool("autoclear", &lu) == B_NO_ERROR)
 		_autoClearCompletedDownloads->SetMarked(lu);
 	settingsMenu->AddItem(_autoClearCompletedDownloads);
 
-	_retainFilePaths = new BMenuItem(str(STR_RETAIN_FILE_PATHS), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_RETAIN_FILE_PATHS), 0);
+	_retainFilePaths = new BMenuItem(B_TRANSLATE(STR_RETAIN_FILE_PATHS), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_RETAIN_FILE_PATHS), 0);
 	if (settingsMsg.FindBool("retainfilepaths", &lu) == B_NO_ERROR)
 		_retainFilePaths->SetMarked(lu);
 	settingsMenu->AddItem(_retainFilePaths);
 
-	_loginOnStartup = new BMenuItem(str(STR_LOGIN_ON_STARTUP), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_LOGIN_ON_STARTUP), 0);
+	_loginOnStartup = new BMenuItem(B_TRANSLATE(STR_LOGIN_ON_STARTUP), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_LOGIN_ON_STARTUP), 0);
 	if (settingsMsg.FindBool("loginonstartup", &lu) == B_NO_ERROR)
 		_loginOnStartup->SetMarked(lu);
 	settingsMenu->AddItem(_loginOnStartup);
 
-	String setColorsString = str(STR_SET_COLORS); setColorsString += B_UTF8_ELLIPSIS;
+	String setColorsString = B_TRANSLATE(STR_SET_COLORS); setColorsString += B_UTF8_ELLIPSIS;
 	_colorItem = new BMenuItem(setColorsString(), new BMessage(SHAREWINDOW_COMMAND_SHOW_COLOR_PICKER));
 	settingsMenu->AddItem(_colorItem);
 
 	settingsMenu->AddItem(new BSeparatorItem);
 
-	_autoUpdateServers = new BMenuItem(str(STR_AUTOUPDATE_SERVER_LIST), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_AUTOUPDATE_SERVER_LIST), 0);
+	_autoUpdateServers = new BMenuItem(B_TRANSLATE(STR_AUTOUPDATE_SERVER_LIST), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_AUTOUPDATE_SERVER_LIST), 0);
 	if (settingsMsg.FindBool("autoupdateservers", &lu) != B_NO_ERROR)
 		lu = true;
 	_autoUpdateServers->SetMarked(lu);
 	settingsMenu->AddItem(_autoUpdateServers);
 
-	_firewalled = new BMenuItem(str(STR_IM_FIREWALLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FIREWALLED));
+	_firewalled = new BMenuItem(B_TRANSLATE(STR_IM_FIREWALLED), new BMessage(SHAREWINDOW_COMMAND_TOGGLE_FIREWALLED));
 
 	settingsMenu->AddItem(_firewalled);
 
@@ -547,13 +548,13 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	 * First splitter node: queries, file transfers, etc.
 	 ******************************************************/
 	/* ================== TOP NAVIGATION BAR ============== */
-	const char * q = str(STR_QUERY);
+	const char * q = B_TRANSLATE(STR_QUERY);
 	_queryMenu = new BMenu(q);
 	_queryMenuField = new BMenuField(NULL, NULL, _queryMenu);
 
-	_disableQueryButton = new BButton(NULL, str(STR_STOP_QUERY), new BMessage(SHAREWINDOW_COMMAND_DISABLE_QUERY));
+	_disableQueryButton = new BButton(NULL, B_TRANSLATE(STR_STOP_QUERY), new BMessage(SHAREWINDOW_COMMAND_DISABLE_QUERY));
 
-	_enableQueryButton = new BButton(NULL, str(STR_START_QUERY), new BMessage(SHAREWINDOW_COMMAND_ENABLE_QUERY));
+	_enableQueryButton = new BButton(NULL, B_TRANSLATE(STR_START_QUERY), new BMessage(SHAREWINDOW_COMMAND_ENABLE_QUERY));
 
 	const char * startupQuery;
 	if (settingsMsg.FindString("query", &startupQuery) != B_NO_ERROR)
@@ -569,7 +570,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	}
 
 	// Fill out the Server menu and text control
-	_serverMenu = new BMenu(str(STR_SERVER));
+	_serverMenu = new BMenu(B_TRANSLATE(STR_SERVER));
 	_serverMenuField = new BMenuField(NULL, NULL, _serverMenu);
 
 	const char * firstName = NULL;
@@ -595,7 +596,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	_serverEntry->SetDivider(0.0f);
 
 	// Fill out the UserName menu and text control
-	_userNameMenu = new BMenu(str(STR_USER_NAME_COLON));
+	_userNameMenu = new BMenu(B_TRANSLATE(STR_USER_NAME_COLON));
 	BMenuField* _userNameMenuField = new BMenuField(NULL, NULL, _userNameMenu);
 
 	const char * un = NULL;
@@ -616,7 +617,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	_userNameEntry->SetTarget(toMe);
 
 	// Fill out the UserStatus menu and text control
-	String statusColon = str(STR_STATUS);
+	String statusColon = B_TRANSLATE(STR_STATUS);
 	statusColon += ':';
 	_userStatusMenu = new BMenu(statusColon());
 	_userStatusMenuField = new BMenuField(NULL, NULL, _userStatusMenu);
@@ -652,8 +653,8 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	_resultsView->AddColumn(new CLVColumn("", 20.0f, CLV_LOCK_AT_BEGINNING | CLV_NOT_MOVABLE | CLV_NOT_RESIZABLE));
 
 	//Download button
-	_requestDownloadsButton = new BButton(NULL, str(STR_DOWNLOAD_SELECTED_FILES), new BMessage(SHAREWINDOW_COMMAND_BEGIN_DOWNLOADS));
-	_clearFinishedDownloadsButton = new BButton(NULL, str(STR_CLEAR_FINISHED_FAILED_TRANSFERS), new BMessage(SHAREWINDOW_COMMAND_CLEAR_FINISHED_DOWNLOADS));
+	_requestDownloadsButton = new BButton(NULL, B_TRANSLATE(STR_DOWNLOAD_SELECTED_FILES), new BMessage(SHAREWINDOW_COMMAND_BEGIN_DOWNLOADS));
+	_clearFinishedDownloadsButton = new BButton(NULL, B_TRANSLATE(STR_CLEAR_FINISHED_FAILED_TRANSFERS), new BMessage(SHAREWINDOW_COMMAND_CLEAR_FINISHED_DOWNLOADS));
 	_prevPageButton = new BButton(NULL, "<", new BMessage(SHAREWINDOW_COMMAND_PREVIOUS_PAGE));
 	_nextPageButton = new BButton(NULL, ">", new BMessage(SHAREWINDOW_COMMAND_NEXT_PAGE));
 
@@ -663,7 +664,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	_transferList->SetInvocationMessage(new BMessage(SHAREWINDOW_COMMAND_LAUNCH_TRANSFER_ITEM));
 	BScrollView* _transferListScroll = new BScrollView("", _transferList, 0L, false, true, B_FANCY_BORDER);
 
-	_cancelTransfersButton = new BButton(NULL, str(STR_REMOVE_SELECTED), new BMessage(SHAREWINDOW_COMMAND_CANCEL_DOWNLOADS));
+	_cancelTransfersButton = new BButton(NULL, B_TRANSLATE(STR_REMOVE_SELECTED), new BMessage(SHAREWINDOW_COMMAND_CANCEL_DOWNLOADS));
 
 	/***********************************************/
 	_chatView = new BView(BRect(), "ChatView", B_FOLLOW_ALL_SIDES, 0);	// this will be populated by base class!
@@ -726,7 +727,7 @@ ShareWindow::ShareWindow(uint64 installID, BMessage & settingsMsg, const char * 
 	AddUserColumn(settingsMsg, STR_STATUS,		 0.33f, NULL, 0);
 	AddUserColumn(settingsMsg, STR_ID,			 0.24f, NULL, CLV_RIGHT_JUSTIFIED);
 	AddUserColumn(settingsMsg, STR_FILES,			0.38f, NULL, CLV_RIGHT_JUSTIFIED);
-	AddUserColumn(settingsMsg, STR_CONNECTION_KEY,	0.57f, str(STR_CONNECTION_KEY)+2, 0);
+	AddUserColumn(settingsMsg, STR_CONNECTION_KEY,	0.57f, B_TRANSLATE(STR_CONNECTION_KEY)+2, 0);
 	AddUserColumn(settingsMsg, STR_LOAD,			0.37f, NULL, CLV_RIGHT_JUSTIFIED);
 	AddUserColumn(settingsMsg, STR_CLIENT,		 0.37f, NULL, 0);
 
@@ -893,7 +894,7 @@ AddServerItem(const char * serverName, bool quiet, int index)
 	 String serverLabel(serverName);
 	 if (serverLabel.Length() > 90) serverLabel = serverLabel.Substring(0,90);
 	 char buf[256];
-	 sprintf(buf, str(STR_ADDED_SERVER), serverLabel());
+	 sprintf(buf, B_TRANSLATE(STR_ADDED_SERVER), serverLabel());
 	 LogMessage(LOG_INFORMATION_MESSAGE, buf);
 	}
 }
@@ -1198,7 +1199,7 @@ ShareWindow::MakeLimitSubmenu(const BMessage& settingsMsg, uint32 code, const ch
 	{
 	 char temp[80];
 	 if (i < ARRAYITEMS(limits)-1) sprintf(temp, "%lu", limits[i]);
-							else strncpy(temp, str(STR_NO_LIMIT), sizeof(temp));
+							else strncpy(temp, B_TRANSLATE(STR_NO_LIMIT), sizeof(temp));
 	 BMessage * msg = new BMessage(code);
 	 msg->AddInt32("num", limits[i]);
 	 BMenuItem * item = new BMenuItem(temp, msg);
@@ -1341,9 +1342,9 @@ ShareWindow::RequestDownloads(const BMessage& filelistMsg, const BDirectory& dow
 					droppoint->y += 50;
 			} else {
 				TRACE_BESHAREWINDOW(("ShareWindow::RequestDownloads Can't download\n"));
-				String errStr(str(STR_CANT_DOWNLOAD_FROM_USER));
+				String errStr(B_TRANSLATE(STR_CANT_DOWNLOAD_FROM_USER));
 				errStr += owner->GetDisplayHandle();
-				errStr += str(STR_COMMA_NO_CONNECTION_INFORMATION_AVAILABLE);
+				errStr += B_TRANSLATE(STR_COMMA_NO_CONNECTION_INFORMATION_AVAILABLE);
 				LogMessage(LOG_ERROR_MESSAGE, errStr());
 			}
 		}
@@ -1372,17 +1373,17 @@ ShareWindow::SetupNewDownload(const RemoteUserItem* user, ShareFileTransfer* xfe
 	TRACE_BESHAREWINDOW(("ShareWindow::SetupNewDownload begin\n"));
 	if ((user->GetFirewalled()) || (forceRemoteIsFirewalled)) {
 		if (_netClient->GetFirewalled()) {
-			String errStr(str(STR_CANT_DOWNLOAD_FILES_FROM));
+			String errStr(B_TRANSLATE(STR_CANT_DOWNLOAD_FILES_FROM));
 			errStr += user->GetUserString();
-			errStr += str(STR_BECAUSE_BOTH_OF_US_ARE_BEHIND_FIREWALLS);
+			errStr += B_TRANSLATE(STR_BECAUSE_BOTH_OF_US_ARE_BEHIND_FIREWALLS);
 			LogMessage(LOG_ERROR_MESSAGE, errStr());
 		} else {
 			if (xfer->InitAcceptSession(user->GetSessionID()) == B_NO_ERROR)
 				return B_NO_ERROR;
 			else {
-				String errStr(str(STR_FILE_DOWNLOAD_ACCEPT_SESSION_FOR));
+				String errStr(B_TRANSLATE(STR_FILE_DOWNLOAD_ACCEPT_SESSION_FOR));
 				errStr += user->GetUserString();
-				errStr += str(STR_FAILED_TO_INITIALIZE);
+				errStr += B_TRANSLATE(STR_FAILED_TO_INITIALIZE);
 				LogMessage(LOG_ERROR_MESSAGE, errStr());
 			}
 		}
@@ -1391,9 +1392,9 @@ ShareWindow::SetupNewDownload(const RemoteUserItem* user, ShareFileTransfer* xfe
 		if (xfer->InitConnectSession(user->GetHostName(), user->GetPort(), 0, user->GetSessionID()) == B_NO_ERROR)
 			return B_NO_ERROR;
 		else {
-			String errStr(str(STR_FILE_DOWNLOAD_SESSION_TO));
+			String errStr(B_TRANSLATE(STR_FILE_DOWNLOAD_SESSION_TO));
 			errStr += user->GetUserString();
-			errStr += str(STR_FAILED_TO_INITIALIZE);
+			errStr += B_TRANSLATE(STR_FAILED_TO_INITIALIZE);
 			LogMessage(LOG_ERROR_MESSAGE, errStr());
 		}
 	}
@@ -1463,7 +1464,7 @@ ShareWindow::DequeueTransferSessions()
 		if (origList.GetNumItems() > 0) {
 			// Then sort the list so that smallest transfers are first
 			Hashtable<ShareFileTransfer *, bool> sortList = origList;
-			#warning "Sort borde fixas?"
+//			#warning "Sort borde fixas?"
 			//sortList.SortByKey(SortShareFileTransfersBySize, _netClient);
 
 			bool sortOrderChanged = false;
@@ -1699,7 +1700,7 @@ ShareWindow::MessageReceived(BMessage* msg)
 			{
 			 char buf[256];
 			 char ipbuf[16]; Inet_NtoA(ip, ipbuf);
-			 sprintf(buf, str(STR_USER_AT_IP_PS_BANNED_FOR), ipbuf);
+			 sprintf(buf, B_TRANSLATE(STR_USER_AT_IP_PS_BANNED_FOR), ipbuf);
 			 String temp(buf);
 			 temp += ' ';
 			 temp += durstr;
@@ -1806,11 +1807,11 @@ ShareWindow::MessageReceived(BMessage* msg)
 		bool newState = !_toggleFileLogging->IsMarked();
 		if (newState == false)
 		{
-			LogMessage(LOG_INFORMATION_MESSAGE, str(STR_LOGGING_DISABLED));
+			LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_LOGGING_DISABLED));
 			CloseLogFile();
 		}
 		_toggleFileLogging->SetMarked(newState);
-		if (newState) LogMessage(LOG_INFORMATION_MESSAGE, str(STR_LOGGING_ENABLED));
+		if (newState) LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_LOGGING_ENABLED));
 	 }
 	 break;
 
@@ -1818,10 +1819,10 @@ ShareWindow::MessageReceived(BMessage* msg)
 		if (_acceptThread.GetPort() > 0)
 		{
 			char temp[150];
-			sprintf(temp, str(STR_BESHARE_IS_LISTENING_ON_PORT_PERCENTU), _acceptThread.GetPort());
+			sprintf(temp, B_TRANSLATE(STR_BESHARE_IS_LISTENING_ON_PORT_PERCENTU), _acceptThread.GetPort());
 			LogMessage(LOG_INFORMATION_MESSAGE, temp);
 		}
-		else LogMessage(LOG_ERROR_MESSAGE, str(STR_COULDNT_START_FILE_SHARING_THREAD));
+		else LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_COULDNT_START_FILE_SHARING_THREAD));
 
 		GenerateSettingsMessage(_stateMessage);	// also save our starting config for later comparisons
 	 break;
@@ -1997,7 +1998,7 @@ ShareWindow::MessageReceived(BMessage* msg)
 			_language = l;
 			_languageSet = true;
 			char temp[200];
-			sprintf(temp, str(STR_LANGUAGE_SELECTED), GetLanguageName(_language, false));
+			sprintf(temp, B_TRANSLATE(STR_LANGUAGE_SELECTED), GetLanguageName(_language, false));
 			LogMessage(LOG_INFORMATION_MESSAGE, temp);
 		}
 	 }
@@ -2218,7 +2219,7 @@ ShareWindow::MessageReceived(BMessage* msg)
 							if (newSession->InitSocketUploadSession(sref, remoteIP, CountActiveSessions(true, NULL) >= _maxSimultaneousUploadSessions) == B_NO_ERROR)
 								_transferList->AddItem(newSession);
 							else {
-								LogMessage(LOG_ERROR_MESSAGE, str(STR_COULDNT_START_SHAREFILETRANSFER_SESSION));
+								LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_COULDNT_START_SHAREFILETRANSFER_SESSION));
 								RemoveHandler(newSession);
 								delete newSession;
 							}
@@ -2322,7 +2323,7 @@ ShareWindow::MessageReceived(BMessage* msg)
 
 		case SHAREWINDOW_COMMAND_DISCONNECT_FROM_SERVER:
 			if (_autoReconnectRunner)
-				LogMessage(LOG_INFORMATION_MESSAGE, str(STR_AUTO_RECONNECT_SEQUENCE_TERMINATED));
+				LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_AUTO_RECONNECT_SEQUENCE_TERMINATED));
 
 			ResetAutoReconnectState(true);	// user intervened, so reset count
 			UpdateConnectStatus(false);	 // make sure disconnect button goes disabled
@@ -2504,7 +2505,7 @@ void ShareWindow::UpdaterCommandReceived(const char * key, const char * value)
 			 if (temp.Length() > 30) temp = temp.Substring(0, 30);
 
 			 char buf[256];
-			 sprintf(buf, str(STR_BESHARE_UPGRADE_NOTICE), temp(), BESHARE_HOMEPAGE_URL);
+			 sprintf(buf, B_TRANSLATE(STR_BESHARE_UPGRADE_NOTICE), temp(), BESHARE_HOMEPAGE_URL);
 			 LogMessage(LOG_INFORMATION_MESSAGE, buf);
 			}
 		}
@@ -2749,7 +2750,7 @@ UpdateConnectStatus(bool titleToo)
 		UpdateTitleBar();
 
 	char buf[200];
-	strcpy(buf, str(STR_CONNECT_TO));
+	strcpy(buf, B_TRANSLATE(STR_CONNECT_TO));
 	strncat(buf, sname, sizeof(buf));
 	buf[sizeof(buf)-1] = '\0';
 	_connectMenuItem->SetLabel(buf);
@@ -2768,13 +2769,13 @@ ShareWindow::UpdateTitleBar()
 		title = custom;
 	else {
 		if ((_isConnecting) && (_isConnected == false)) {
-			title += str(STR_CONNECTING_TO);
+			title += B_TRANSLATE(STR_CONNECTING_TO);
 			title += _connectedTo;
 	 	} else if (_isConnected) {
 			const char * sid = _netClient->GetLocalSessionID();
 			if (sid[0] != '\0') {
 				title += " - ";
-				title += str(STR_USER_NUMBER);
+				title += B_TRANSLATE(STR_USER_NUMBER);
 				title += sid;
 				title += ' ';
 			}
@@ -2783,14 +2784,14 @@ ShareWindow::UpdateTitleBar()
 			title += _userNameEntry->Text();
 			title += ')';
 
-			title += str(STR_CONNECTED_TO);
+			title += B_TRANSLATE(STR_CONNECTED_TO);
 			title += _connectedTo;
 
 			uint32 count = _netClient->GetSharedFileCount();
 			if (count > 0) {
 				title += ' ';
 				char buf[256];
-				sprintf(buf, str(STR_SHARING_PERCENTI_LOCAL_FILES), (int) _netClient->GetSharedFileCount());
+				sprintf(buf, B_TRANSLATE(STR_SHARING_PERCENTI_LOCAL_FILES), (int) _netClient->GetSharedFileCount());
 				title += buf;
 			}
 	 	} else {
@@ -2808,9 +2809,9 @@ ShareWindow::UpdateTitleBar()
 				char buf[256];
 
 				if (totalNumFiles > numFiles)
-					sprintf(buf, str(STR_PERCENTLU_DASH_PERCENTLU_OF_PERCENTLU_RESULTS_SHOWN), pageBase+1, pageBase+numFiles, totalNumFiles);
+					sprintf(buf, B_TRANSLATE(STR_PERCENTLU_DASH_PERCENTLU_OF_PERCENTLU_RESULTS_SHOWN), pageBase+1, pageBase+numFiles, totalNumFiles);
 				else
-					sprintf(buf, str(STR_PERCENTLU_RESULTS_SHOWN), numFiles);
+					sprintf(buf, B_TRANSLATE(STR_PERCENTLU_RESULTS_SHOWN), numFiles);
 
 				title += buf;
 				GetByteSizeString(_bytesShown, buf);
@@ -2862,9 +2863,9 @@ ShareWindow::QuitRequested()
 
 		if (numInProgress > 0) {
 			char temp[512];
-			sprintf(temp, str(STR_TRANSFERS_IN_PROGRESS_ARE_YOU_SURE_YOU_WANT_TO_QUIT), numInProgress);
+			sprintf(temp, B_TRANSLATE(STR_TRANSFERS_IN_PROGRESS_ARE_YOU_SURE_YOU_WANT_TO_QUIT), numInProgress);
 
-			if ((new BAlert("BeShare", temp, str(STR_QUIT), str(STR_DONT_QUIT)))->Go())
+			if ((new BAlert("BeShare", temp, B_TRANSLATE(STR_QUIT), B_TRANSLATE(STR_DONT_QUIT)))->Go())
 				return false;
 		}
 
@@ -2905,7 +2906,7 @@ RemoveServerItem(const char * serverName, bool quiet)
 			String serverLabel(serverName);
 			if (serverLabel.Length() > 90) serverLabel = serverLabel.Substring(0,90);
 			char buf[256];
-			sprintf(buf, str(STR_REMOVED_SERVER), serverLabel());
+			sprintf(buf, B_TRANSLATE(STR_REMOVED_SERVER), serverLabel());
 			LogMessage(LOG_INFORMATION_MESSAGE, buf);
 		}
 		_serverMenu->RemoveItem(i);
@@ -2923,7 +2924,7 @@ ShareWindow::SetConnectStatus(bool isConnecting, bool isConnected)
 	TRACE_BESHAREWINDOW(("ShareWindow::SetConnectStatus begin\n"));
 	if ((!_isConnected) && (isConnected)) {
 		TRACE_BESHAREWINDOW(("ShareWindow::SetConnectStatus if first\n"));
-		LogMessage(LOG_INFORMATION_MESSAGE, str(STR_CONNECTION_ESTABLISHED));
+		LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_CONNECTION_ESTABLISHED));
 
 		AddServerItem(_connectedTo(), false, 0);
 
@@ -2934,12 +2935,12 @@ ShareWindow::SetConnectStatus(bool isConnecting, bool isConnected)
 			_queryOnConnect = "";	// we only want to do this once!
 		}
 	} else if ((!_isConnecting) && (isConnecting))
-		LogMessage(LOG_INFORMATION_MESSAGE, str(STR_CONNECTING_TO_SERVER_DOTDOTDOT));
+		LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_CONNECTING_TO_SERVER_DOTDOTDOT));
 	else if ((isConnecting == false) && (isConnected == false)) {
 		if (_isConnected)
-			LogMessage(LOG_ERROR_MESSAGE, str(STR_YOU_ARE_NO_LONGER_CONNECTED_TO_THE_MUSCLE_SERVER));
+			LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_YOU_ARE_NO_LONGER_CONNECTED_TO_THE_MUSCLE_SERVER));
 		else if (_isConnecting)
-			LogMessage(LOG_ERROR_MESSAGE, str(STR_CONNECTION_TO_SERVER_FAILED));
+			LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_CONNECTION_TO_SERVER_FAILED));
 	}
 
 	TRACE_BESHAREWINDOW(("ShareWindow::SetConnectStatus if middle\n"));
@@ -3396,13 +3397,13 @@ ShareWindow::CreateColumn(ShareMIMEInfo* optMimeInfo, const char* attrName, bool
 				label += 8;
 
 				if (strcmp(label, "Kind") == 0)
-					label = str(STR_KIND);		// hacked-in language support :^P
+					label = B_TRANSLATE(STR_KIND);		// hacked-in language support :^P
 				else if (strcmp(label, "File Size") == 0)
-					label = str(STR_FILE_SIZE);
+					label = B_TRANSLATE(STR_FILE_SIZE);
 				else if (strcmp(label, "Modification Time") == 0)
-					label = str(STR_MODIFICATION_TIME);
+					label = B_TRANSLATE(STR_MODIFICATION_TIME);
 				else if (strcmp(label, "Path")==0)
-					label = str(STR_PATH);
+					label = B_TRANSLATE(STR_PATH);
 
 				optMimeInfo = NULL;	// these vars are not type specific
 			} else {
@@ -3785,24 +3786,24 @@ ShareWindow::SendOutMessageOrPing(const String & text, ChatWindow * optEchoTo, b
 			}
 
 			if (isPing) {
-				pinging = pinging.Prepend(str(STR_SENT_PING_REQUEST_TO));
+				pinging = pinging.Prepend(B_TRANSLATE(STR_SENT_PING_REQUEST_TO));
 				LogMessage(LOG_INFORMATION_MESSAGE, pinging(), NULL, NULL, false, optEchoTo);
 			} else
 				_lastPrivateMessageTarget = targetStr;
 		} else {
-			String temp(str(STR_UNKNOWN_USER));
+			String temp(B_TRANSLATE(STR_UNKNOWN_USER));
 			temp += targetStr;
 
 			if (isPing == false) {
-				temp += str(STR_MESSAGE);
+				temp += B_TRANSLATE(STR_MESSAGE);
 				temp += restOfString;
-				temp += str(STR_NOT_SENT);
+				temp += B_TRANSLATE(STR_NOT_SENT);
 			}
 
 			LogMessage(LOG_ERROR_MESSAGE, temp(), NULL, NULL, false, optEchoTo);
 		}
 	} else
-		LogMessage(LOG_ERROR_MESSAGE, str(STR_NO_TARGET_USER_SPECIFIED_IN_MSG), NULL, NULL, false, optEchoTo);
+		LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_NO_TARGET_USER_SPECIFIED_IN_MSG), NULL, NULL, false, optEchoTo);
 }
 
 
@@ -3815,7 +3816,7 @@ LogPattern(const char * preamble, const String & pattern, ChatWindow * optEchoTo
 	else
 	{
 	 iStr += "(";
-	 iStr += str(STR_DISABLED);
+	 iStr += B_TRANSLATE(STR_DISABLED);
 	 iStr += ")";
 	}
 	LogMessage(LOG_INFORMATION_MESSAGE, iStr(), NULL, NULL, false, optEchoTo);
@@ -3830,12 +3831,12 @@ LogRateLimit(const char * preamble, uint32 limit, ChatWindow * optEchoTo)
 	{
 	 char buf[64]; sprintf(buf, " %lu ", limit);
 	 iStr += buf;
-	 iStr += str(STR_TOKEN_BYTES_PER_SECOND);
+	 iStr += B_TRANSLATE(STR_TOKEN_BYTES_PER_SECOND);
 	}
 	else
 	{
 	 iStr += " (";
-	 iStr += str(STR_NO_LIMIT);
+	 iStr += B_TRANSLATE(STR_NO_LIMIT);
 	 iStr += ")";
 	}
 	LogMessage(LOG_INFORMATION_MESSAGE, iStr(), NULL, NULL, false, optEchoTo);
@@ -3977,14 +3978,14 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 if (text->Length() > 8)
 	 {
 		_ignorePattern = text->Substring(8).Trim();
-		String s(str(STR_IGNORE_PATTERN_SET_TO));
+		String s(B_TRANSLATE(STR_IGNORE_PATTERN_SET_TO));
 		s += _ignorePattern;
 		LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
 	 }
 	 else
 	 {
 		_ignorePattern = "";
-		LogMessage(LOG_INFORMATION_MESSAGE, str(STR_IGNORE_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
+		LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_IGNORE_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
 	 }
 	}
 	else if (lowerText.StartsWith("/watch"))
@@ -3992,14 +3993,14 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 if (text->Length() > 7)
 	 {
 		_watchPattern = text->Substring(7).Trim();
-		String s(str(STR_WATCH_PATTERN_SET_TO));
+		String s(B_TRANSLATE(STR_WATCH_PATTERN_SET_TO));
 		s += _watchPattern;
 		LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
 	 }
 	 else
 	 {
 		_watchPattern = "";
-		LogMessage(LOG_INFORMATION_MESSAGE, str(STR_WATCH_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
+		LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_WATCH_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
 	 }
 	}
 	else if (lowerText.StartsWith("/autopriv"))
@@ -4007,21 +4008,21 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 if (text->Length() > 10)
 	 {
 		_autoPrivPattern = text->Substring(10).Trim();
-		String s(str(STR_AUTOPRIV_PATTERN_SET_TO));
+		String s(B_TRANSLATE(STR_AUTOPRIV_PATTERN_SET_TO));
 		s += _autoPrivPattern;
 		LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
 	 }
 	 else
 	 {
 		_autoPrivPattern = "";
-		LogMessage(LOG_INFORMATION_MESSAGE, str(STR_AUTOPRIV_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
+		LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_AUTOPRIV_PATTERN_REMOVED), NULL, NULL, false, optEchoTo);
 	 }
 	}
 	else if (lowerText.StartsWith("/awaymsg"))
 	{
 	 _oneTimeAwayStatus = "";
 	 if (text->Length() > 9) _awayStatus = text->Substring(9).Trim();
-	 String s(str(STR_AWAY_MESSAGE_SET_TO));
+	 String s(B_TRANSLATE(STR_AWAY_MESSAGE_SET_TO));
 	 s += _awayStatus;
 	 LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
 	}
@@ -4034,7 +4035,7 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	{
 	 String command = text->Substring(7).Trim();
 
-	 String s(str(STR_EXECUTING_SHELL_COMMAND));
+	 String s(B_TRANSLATE(STR_EXECUTING_SHELL_COMMAND));
 	 s += " [";
 	 s += command;
 	 s += "]";
@@ -4047,7 +4048,7 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	{
 	 _onIdleString = lowerText.Substring(7).Trim();
 
-	 String s(str(STR_IDLE_COMMAND_SET_TO));
+	 String s(B_TRANSLATE(STR_IDLE_COMMAND_SET_TO));
 	 s += " [";
 	 s += _onIdleString();
 	 s += "]";
@@ -4058,25 +4059,25 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 String ol = lowerText.Substring(9).Trim();
 	 _onLoginStrings.AddTail(ol);
 
-	 String report(str(STR_ADDED_STARTUP_COMMAND));
+	 String report(B_TRANSLATE(STR_ADDED_STARTUP_COMMAND));
 	 report += ol;
 	 LogMessage(LOG_INFORMATION_MESSAGE, report(), NULL, NULL, false, optEchoTo);
 	}
 	else if (lowerText.Equals("/clearonlogin"))
 	{
 	 _onLoginStrings.Clear();
-	 LogMessage(LOG_INFORMATION_MESSAGE, str(STR_ONLOGIN_COMMANDS_CLEARED), NULL, NULL, false, optEchoTo);
+	 LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_ONLOGIN_COMMANDS_CLEARED), NULL, NULL, false, optEchoTo);
 	}
 	else if (lowerText.Equals("/serverinfo"))
 	{
 	 _showServerStatus = true;
 	 _netClient->SendGetParamsMessage();	// request server status.
-	 LogMessage(LOG_INFORMATION_MESSAGE, str(STR_SERVER_STATUS_REQUESTED), NULL, NULL, false, optEchoTo);
+	 LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_SERVER_STATUS_REQUESTED), NULL, NULL, false, optEchoTo);
 	}
 	else if (lowerText.Equals("/unban"))
 	{
 	 char temp[256];
-	 sprintf(temp, str(STR_REMOVING_PLU_UPLOAD_BANS), _bans.GetNumItems());
+	 sprintf(temp, B_TRANSLATE(STR_REMOVING_PLU_UPLOAD_BANS), _bans.GetNumItems());
 	 _bans.Clear();
 	 LogMessage(LOG_INFORMATION_MESSAGE, temp, NULL, NULL, false, optEchoTo);
 	}
@@ -4085,7 +4086,7 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 String which = lowerText.Substring(9).Trim();
 	 if (_aliases.Remove(which) == B_NO_ERROR)
 	 {
-		String s(str(STR_REMOVED_ALIAS));
+		String s(B_TRANSLATE(STR_REMOVED_ALIAS));
 		s += " ";
 		s += which;
 		LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
@@ -4106,7 +4107,7 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 			 String v(value);
 			 v = v.Trim();
 			 _aliases.Put(key, v);
-			 String s(str(STR_SET_ALIAS));
+			 String s(B_TRANSLATE(STR_SET_ALIAS));
 			 s += ' ';
 			 s += key;
 			 s += " = ";
@@ -4151,16 +4152,16 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	 if (arg) updateTitle.AddString("title", arg);
 	 (optEchoTo ? optEchoTo : this)->PostMessage(&updateTitle);
 
-	 String s(str(STR_CUSTOM_WINDOW_TITLE_IS_NOW));
+	 String s(B_TRANSLATE(STR_CUSTOM_WINDOW_TITLE_IS_NOW));
 	 s += ": ";
-	 s += arg ? arg : str(STR_DISABLED);
+	 s += arg ? arg : B_TRANSLATE(STR_DISABLED);
 	 LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, optEchoTo);
 	}
 	else if (lowerText.StartsWith("/setulrate")) SetBandwidthLimit(true, lowerText, optEchoTo);
 	else if (lowerText.StartsWith("/setdlrate")) SetBandwidthLimit(false, lowerText, optEchoTo);
 	else if (lowerText.Equals("/help"))
 	{
-	 LogMessage(LOG_INFORMATION_MESSAGE, str(STR_AVAILABLE_IRC_STYLE_COMMANDS), NULL, NULL, false, optEchoTo);
+	 LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_AVAILABLE_IRC_STYLE_COMMANDS), NULL, NULL, false, optEchoTo);
 	 LogHelp("action",	 STR_TOKEN_ACTION,				STR_DO_SOMETHING,				optEchoTo);
 	 LogHelp("alias",	 STR_TOKEN_NAME_AND_VALUE,		 STR_CREATE_AN_ALIAS,			 optEchoTo);
 	 LogHelp("autopriv",	STR_TOKEN_NAMES_OR_SESSION_IDS,	STR_SPECIFY_AUTOPRIV_USERS,		optEchoTo);
@@ -4200,25 +4201,25 @@ SendChatText(const String & t, ChatWindow * optEchoTo)
 	}
 	else if (lowerText.Equals("/info"))
 	{
-	 LogPattern(str(STR_CURRENT_IGNORE_PATTERN_IS),	_ignorePattern,	optEchoTo);
-	 LogPattern(str(STR_CURRENT_WATCH_PATTERN_IS),	_watchPattern,	optEchoTo);
-	 LogPattern(str(STR_CURRENT_AUTOPRIV_PATTERN_IS), _autoPrivPattern, optEchoTo);
-	 LogRateLimit(str(STR_MAX_DOWNLOAD_RATE_IS),	 _maxDownloadRate, optEchoTo);
-	 LogRateLimit(str(STR_MAX_UPLOAD_RATE_IS),		_maxUploadRate,	optEchoTo);
+	 LogPattern(B_TRANSLATE(STR_CURRENT_IGNORE_PATTERN_IS),	_ignorePattern,	optEchoTo);
+	 LogPattern(B_TRANSLATE(STR_CURRENT_WATCH_PATTERN_IS),	_watchPattern,	optEchoTo);
+	 LogPattern(B_TRANSLATE(STR_CURRENT_AUTOPRIV_PATTERN_IS), _autoPrivPattern, optEchoTo);
+	 LogRateLimit(B_TRANSLATE(STR_MAX_DOWNLOAD_RATE_IS),	 _maxDownloadRate, optEchoTo);
+	 LogRateLimit(B_TRANSLATE(STR_MAX_UPLOAD_RATE_IS),		_maxUploadRate,	optEchoTo);
 
 	 char tbuf1[32]; GetByteSizeString(_totalBytesDownloaded, tbuf1);
 	 char tbuf2[32]; GetByteSizeString(_totalBytesUploaded,	tbuf2);
-	 char buf[128]; sprintf(buf, str(STR_TRANSFER_REPORT), tbuf1, tbuf2);
+	 char buf[128]; sprintf(buf, B_TRANSLATE(STR_TRANSFER_REPORT), tbuf1, tbuf2);
 	 LogMessage(LOG_INFORMATION_MESSAGE, buf, NULL, NULL, false, optEchoTo);
 	}
 	else if ((lowerText.StartsWith("/me") == false)&&(lowerText.StartsWith("/")&&(!lowerText.StartsWith("//"))))	// double slash means escape the starting slash
 	{
-	 String err(str(STR_ERROR_UNKNOWN_COMMAND));
+	 String err(B_TRANSLATE(STR_ERROR_UNKNOWN_COMMAND));
 	 err += " \"";
 	 StringTokenizer tok(text->Cstr());
 	 err += tok.GetNextToken();
 	 err += "\".	";
-	 err += str(STR_TYPE_HELP_FOR_LIST_OF_AVAILABLE_COMMANDS);
+	 err += B_TRANSLATE(STR_TYPE_HELP_FOR_LIST_OF_AVAILABLE_COMMANDS);
 	 LogMessage(LOG_ERROR_MESSAGE, err(), NULL, NULL, false, optEchoTo);
 	}
 	else if (lowerText.Length() > 0)
@@ -4239,12 +4240,12 @@ void ShareWindow::SetBandwidthLimit(bool upload, const String & lowerText, ChatW
 	if (upload)
 	{
 	 _maxUploadRate = limit;
-	 LogRateLimit(str(STR_MAX_UPLOAD_RATE_IS), _maxUploadRate, optEchoTo);
+	 LogRateLimit(B_TRANSLATE(STR_MAX_UPLOAD_RATE_IS), _maxUploadRate, optEchoTo);
 	}
 	else
 	{
 	 _maxDownloadRate = limit;
-	 LogRateLimit(str(STR_MAX_DOWNLOAD_RATE_IS), _maxDownloadRate, optEchoTo);
+	 LogRateLimit(B_TRANSLATE(STR_MAX_DOWNLOAD_RATE_IS), _maxDownloadRate, optEchoTo);
 	}
 }
 
@@ -4285,7 +4286,7 @@ GetUserNameBySessionID(const char * sessionID) const
 void ShareWindow::GetUserNameForSession(const char * sessionID, String & retUserName) const
 {
 	const char * ret = GetUserNameBySessionID(sessionID);
-	retUserName = ret ? ret : str(STR_UNKNOWN);
+	retUserName = ret ? ret : B_TRANSLATE(STR_UNKNOWN);
 }
 
 void ShareWindow::GetLocalUserName(String & retLocalUserName) const
@@ -4480,13 +4481,13 @@ ShareWindow::MakeTimeElapsedString(int64 t) const
 
 	if (weeks > 0)
 	{
-	 sprintf(temp, "%Li %s, ", weeks, str(STR_WEEKS));
+	 sprintf(temp, "%Li %s, ", weeks, B_TRANSLATE(STR_WEEKS));
 	 s += temp;
 	}
 
 	if ((weeks > 0)||(days > 0))
 	{
-	 sprintf(temp, "%Li %s, ", days, str(STR_DAYS));
+	 sprintf(temp, "%Li %s, ", days, B_TRANSLATE(STR_DAYS));
 	 s += temp;
 	}
 
@@ -4502,7 +4503,7 @@ ShareWindow::ServerParametersReceived(const Message & params)
 	if (_showServerStatus)
 	{
 	 _showServerStatus = false;
-	 LogMessage(LOG_INFORMATION_MESSAGE, str(STR_SERVER_STATUS));
+	 LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_SERVER_STATUS));
 
 	 const char * serverVersion;
 	 if (params.FindString(PR_NAME_SERVER_VERSION, &serverVersion) == B_NO_ERROR) LogStat(STR_SERVER_VERSION, serverVersion);
@@ -4521,7 +4522,7 @@ ShareWindow::ServerParametersReceived(const Message & params)
 		float memAvailableMB = ((float)memAvailable)/oneMeg;
 		float memUsedMB	 = ((float)memUsed)	 /oneMeg;
 		char temp[256];
-		sprintf(temp, str(STR_MEMORY_USED_AVAILABLE), memUsedMB, memAvailableMB);
+		sprintf(temp, B_TRANSLATE(STR_MEMORY_USED_AVAILABLE), memUsedMB, memAvailableMB);
 		LogStat(STR_SERVER_MEMORY_USAGE, temp);
 	 }
 	}
@@ -4586,7 +4587,7 @@ ShareWindow::BeginAutoReconnect()
 	 ResetAutoReconnectState(false);	// make sure no runner is currently going
 	 uint32 reconnectDelayMinutes = _autoReconnectAttemptCount-1;
 	 char buf[128];
-	 sprintf(buf, str(STR_WILL_ATTEMPT_AUTO_RECONNECT_IN_PLU_MINUTES), reconnectDelayMinutes);
+	 sprintf(buf, B_TRANSLATE(STR_WILL_ATTEMPT_AUTO_RECONNECT_IN_PLU_MINUTES), reconnectDelayMinutes);
 	 LogMessage(LOG_INFORMATION_MESSAGE, buf);
 	 _autoReconnectRunner = new BMessageRunner(BMessenger(this), new BMessage(SHAREWINDOW_COMMAND_AUTO_RECONNECT), reconnectDelayMinutes*60*1000000LL);
 	 UpdateConnectStatus(false);	// so that the disconnect button will become enabled
@@ -4598,7 +4599,7 @@ void
 ShareWindow::DoAutoReconnect()
 {
 	ResetAutoReconnectState(false);	// once the connection is started, the runner is unnecessary
-	LogMessage(LOG_INFORMATION_MESSAGE, str(STR_ATTEMPTING_AUTO_RECONNECT));
+	LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_ATTEMPTING_AUTO_RECONNECT));
 	ReconnectToServer();	// reconnect immediately
 }
 
@@ -4689,7 +4690,7 @@ ShareWindow::SetLocalUserName(const char * name)
 	UpdateLRUMenu(_userNameMenu, name, SHAREWINDOW_COMMAND_USER_SELECTED_USER_NAME, "username", 20, true);
 
 	_netClient->SetLocalUserName(name);
-	String s(str(STR_YOUR_NAME_HAS_BEEN_CHANGED_TO));
+	String s(B_TRANSLATE(STR_YOUR_NAME_HAS_BEEN_CHANGED_TO));
 	s += _netClient->GetLocalUserName();
 	LogMessage(LOG_USER_EVENT_MESSAGE, s());
 	_resultsView->MakeFocus();	// so that when the user presses a key, it drops to the _textEntry
@@ -4704,7 +4705,7 @@ ShareWindow::SetLocalUserStatus(const char * status)
 	UpdateLRUMenu(_userStatusMenu, status, SHAREWINDOW_COMMAND_USER_SELECTED_USER_STATUS, "userstatus", 20, true);
 
 	_netClient->SetLocalUserStatus(status);
-	String s(str(STR_YOUR_STATUS_HAS_BEEN_CHANGED_TO));
+	String s(B_TRANSLATE(STR_YOUR_STATUS_HAS_BEEN_CHANGED_TO));
 	s += _netClient->GetLocalUserStatus();
 	LogMessage(LOG_USER_EVENT_MESSAGE, s());
 	_resultsView->MakeFocus();	// so that when the user presses a key, it drops to the _textEntry
@@ -4835,7 +4836,7 @@ void ShareWindow::DoScreenShot(const String & fn, ChatWindow * optEchoTo)
 	if (ShareScreenshot(fileName) == B_NO_ERROR)
 	{
 	 String ad("/me ");
-	 ad += str(STR_IS_NOW_SHARING_A_SCREENSHOT);
+	 ad += B_TRANSLATE(STR_IS_NOW_SHARING_A_SCREENSHOT);
 	 ad += ": beshare:";
 
 	 String fn = fileName;
@@ -4859,7 +4860,7 @@ void ShareWindow::DoScreenShot(const String & fn, ChatWindow * optEchoTo)
 	 }
 	 else SendChatText(ad, optEchoTo);
 	}
-	else LogMessage(LOG_ERROR_MESSAGE, str(STR_ERROR_SHARING_SCREENSHOT), NULL, NULL, false, optEchoTo);
+	else LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_ERROR_SHARING_SCREENSHOT), NULL, NULL, false, optEchoTo);
 }
 
 

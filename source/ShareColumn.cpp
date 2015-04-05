@@ -3,6 +3,9 @@
 #include "ShareStrings.h"
 #include "ShareUtils.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ShareColumn"
+
 namespace beshare {
 
 ShareColumn ::
@@ -52,7 +55,7 @@ GetFileCellText(const RemoteFileItem * item) const
 					case B_BOOL_TYPE:		
 					{
 						bool v;
-						if (msg.FindBool(attrName, &v) == B_NO_ERROR) sprintf(_buf, "%s", v?str(STR_TRUE):str(STR_FALSE));
+						if (msg.FindBool(attrName, &v) == B_NO_ERROR) sprintf(_buf, "%s", v?B_TRANSLATE(STR_TRUE):B_TRANSLATE(STR_FALSE));
 					}
 					break;
 
@@ -111,7 +114,7 @@ GetFileCellText(const RemoteFileItem * item) const
 					break;
 
 					default:
-						result = str(STR_UNKNOWN_TYPE);
+						result = B_TRANSLATE(STR_UNKNOWN_TYPE);
 					break;
 				}
 			}

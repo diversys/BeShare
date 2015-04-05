@@ -1,3 +1,5 @@
+#include <Catalog.h>
+
 #ifndef SHARE_STRINGS_ENGLISH_H
 #define SHARE_STRINGS_ENGLISH_H
 
@@ -36,7 +38,7 @@ enum LANGUAGE {
 	LANGUAGE_MALKOVITCH,
 	NUM_LANGUAGES
 };
- 
+
 // Menu shortcuts used in the program
 enum {
 	SHORTCUT_CONNECT = 0,
@@ -52,324 +54,321 @@ enum {
 	SHORTCUT_TOGGLE_FILE_LOGGING,
 	SHORTCUT_FILE_SHARING_ENABLED,
 	SHORTCUT_OPEN_LOGS_FOLDER,
-	NUM_SHORTCUTS
-};
-
-// Strings used in the program
-enum LANSTRING {
-	STR_ANONYMOUS = 0,
-	STR_UNKNOWN,
-	STR_IS_NOW_CONNECTED,
-	STR_HAS_DISCONNECTED,
-	STR_USER_NUMBER,
-	STR_AKA,
-	STR_IS_NOW_KNOWN_AS,
-	STR_TRUE,
-	STR_FALSE,
-	STR_UNKNOWN_TYPE,
-	STR_USER,
-	STR_IS_DOWNLOADING,
-	STR_ERROR_WRITING_TO_FILE,
-	STR_AN_ERROR_OCCURRED,
-	STR_QUEUED_LOCAL_MACHINE_TOO_BUSY,
-	STR_QUEUED_REMOTE_MACHINE_TOO_BUSY,
-	STR_SENT,
-	STR_RCVD,
-	STR_SEC,
-	STR_AWAITING_CALLBACK,
-	STR_CONNECTING,
-	STR_DOWNLOAD_COMPLETE,
-	STR_DOWNLOAD_ABORTED,
-	STR_COULDNT_CONNECT,
-	STR_PREPARING_TO_UPLOAD,
-	STR_PREPARING_TO_DOWNLOAD,
-	STR_TO,
-	STR_FROM,
-	STR_ERROR_STARTING_DOWNLOAD_NO_ACCEPT_PORT,
-	STR_ERROR_STARTING_DELAYED_CONNECT,
-	STR_ERROR_STARTING_DELAYED_CONNECT_NO_TRANSCEIVER_THREAD,
-	STR_ERROR_COULDNT_CREATE_CONNECT_THREAD,
-	STR_SHARING_PERCENTI_LOCAL_FILES,
-	STR_COULDNT_FIND_SHARED_SUBDIRECTORY_FILE_SHARING_DISABLED,
-	STR_FILE_NAME_KEY,
-	STR_USER_KEY,
-	STR_SESSIONID_KEY,
-	STR_CONNECTION_KEY,
-	STR_FILE,
-	STR_CONNECT_TO_SERVER,
-	STR_DISCONNECT,
-	STR_OPEN_SHARED_FOLDER,
-	STR_OPEN_DOWNLOADS_FOLDER,
-	STR_CLEAR_CHAT_LOG,
-	STR_RESET_LAYOUT,
-	STR_ABOUT_BESHARE,
-	STR_QUIT,
-	STR_ATTRIBUTES,
-	STR_SETTINGS,
-	STR_MAX_SIMULTANEOUS_UPLOADS,
-	STR_MAX_SIMULTANEOUS_DOWNLOADS,
-	STR_NO_LIMIT,
-	STR_UPLOAD_BANDWIDTH,
-	STR_LOG,
-	STR_UPLOADS,
-	STR_USER_EVENTS,
-	STR_QUERY_CHANGES,
-	STR_FULL_USER_QUERIES,
-	STR_IM_FIREWALLED,
-	STR_QUERY,
-	STR_START_QUERY,
-	STR_STOP_QUERY,
-	STR_SERVER,
-	STR_USER_NAME_COLON,
-	STR_DOWNLOAD_SELECTED_FILES,
-	STR_CLEAR_FINISHED_FAILED_TRANSFERS,
-	STR_REMOVE_SELECTED,
-	STR_CHAT_NOUN,
-	STR_NAME,
-	STR_ID,
-	STR_BESHARE_IS_LISTENING_ON_PORT_PERCENTU,
-	STR_COULDNT_START_FILE_SHARING_THREAD,
-	STR_CANT_DOWNLOAD_FROM_USER,
-	STR_COMMA_NO_CONNECTION_INFORMATION_AVAILABLE,
-	STR_CANT_DOWNLOAD_FILES_FROM,
-	STR_BECAUSE_BOTH_OF_US_ARE_BEHIND_FIREWALLS,
-	STR_FILE_DOWNLOAD_ACCEPT_SESSION_FOR,
-	STR_FAILED_TO_INITIALIZE,
-	STR_FILE_DOWNLOAD_SESSION_TO,
-	STR_CHANGED_QUERY_TO,
-	STR_STARTED_QUERY,
-	STR_COULDNT_START_SHAREFILETRANSFER_SESSION,
-	STR_YOUR_NAME_HAS_BEEN_CHANGED_TO,
-	STR_BY,
-	STR_UNKNOWN_USER,
-	STR_MESSAGE,
-	STR_NOT_SENT,
-	STR_NO_TARGET_USER_SPECIFIED_IN_MSG,
-	STR_STOPPED_QUERY,
-	STR_SYSTEM,
-	STR_WARNING,
-	STR_ERROR,
-	STR_ACTION,
-	STR_CONNECT_TO,
-	STR_CONNECTING_TO,
-	STR_PERCENTLU_RESULTS_SHOWN,
-	STR_CONNECTED_TO,
-	STR_CONNECTION_ESTABLISHED,
-	STR_CONNECTING_TO_SERVER_DOTDOTDOT,
-	STR_YOU_ARE_NO_LONGER_CONNECTED_TO_THE_MUSCLE_SERVER,
-	STR_CONNECTION_TO_SERVER_FAILED,
-	STR_ENGLISH,
-	STR_SPANISH,
-	STR_LANGUAGE_SELECTED,
-	STR_LANGUAGE,
-	STR_GERMAN,
-	STR_KIND,
-	STR_FILE_SIZE,
-	STR_FILES,
-	STR_DUTCH,
-	STR_EXAMINING_FILES,
-	STR_AVAILABLE_IRC_STYLE_COMMANDS,
-	STR_SEND_A_PRIVATE_MESSAGE,
-	STR_CHANGE_YOUR_USER_NAME,
-	STR_DO_SOMETHING,
-	STR_SYNONYM_FOR_ACTION,
-	STR_CLEAR_THE_CHAT_LOG,
-	STR_START_A_NEW_QUERY,
-	STR_STOP_THE_CURRENT_QUERY,
-	STR_CONNECT_TO_A_SERVER,
-	STR_DISCONNECT_FROM_THE_SERVER,
-	STR_QUIT_BESHARE,
-	STR_SHOW_THIS_HELP_TEXT,
-	STR_TOKEN_NAME_OR_SESSION_ID_TEXT,
-	STR_TOKEN_NAME,
-	STR_TOKEN_ACTION,
-	STR_TOKEN_QUERY_STRING,
-	STR_TOKEN_SERVER_NAME,
-	STR_PORTUGUESE,
-	STR_FRENCH,
-	STR_BEEP_WHEN_MENTIONED,
-	STR_MAX_SIMULTANEOUS_UPLOADS_PER_USER,
-	STR_TIMESTAMPS,
-	STR_AUTOCLEAR_COMPLETED_DOWNLOADS,
-	STR_MAX_SIMULTANEOUS_DOWNLOADS_PER_USER,
-	STR_ITALIAN,
-	STR_LOGIN_ON_STARTUP,
-	STR_PRIVATE_MESSAGES,
-	STR_OPEN_PRIVATE_CHAT_WINDOW,
-	STR_BESHARE_PRIVATE_CHAT,
-	STR_CHAT_WITH,
-	STR_ERROR_NO_USER_SPECIFIED,
-	STR_SAVE_PRESET,
-	STR_RESTORE_PRESET,
-	STR_ERROR_UNKNOWN_COMMAND,
-	STR_TYPE_HELP_FOR_LIST_OF_AVAILABLE_COMMANDS,
-	STR_PERCENTLU_DASH_PERCENTLU_OF_PERCENTLU_RESULTS_SHOWN,
-	STR_DISPLAY,
-	STR_INFO_MESSAGES,
-	STR_WARNING_MESSAGES,
-	STR_ERROR_MESSAGES,
-	STR_LOGGING_ENABLED,
-	STR_LOGGING_DISABLED,
-	STR_RESULTS_PER_PAGE,
-	STR_SWITCH_TO_PAGE,
-	STR_SPECIFY_USERS_TO_IGNORE,
-	STR_IGNORE_PATTERN_SET_TO,
-	STR_IGNORE_PATTERN_REMOVED,
-	STR_TOKEN_NAMES_OR_SESSION_IDS,
-	STR_MOVE_UP,	
-	STR_MOVE_DOWN,	
-	STR_HALT_DOWNLOAD,	
-	STR_RESTART_DOWNLOAD,	
-	STR_OPEN_FILE,
-	STR_RUSSIAN,
-	STR_CHAT_VERB,
-	STR_CURRENT_IGNORE_PATTERN_IS,
-	STR_DISABLED,
-	STR_TRANSFERS_IN_PROGRESS_ARE_YOU_SURE_YOU_WANT_TO_QUIT,
-	STR_DONT_QUIT,
-	STR_MODIFICATION_TIME,
-	STR_ESPERANTO,
-	STR_SWEDISH,
-	STR_PING_OTHER_CLIENTS,
-	STR_PING_REPLY_LIMS,
-	STR_SENT_PING_REQUEST_TO,
-	STR_NORWEGIAN,
-	STR_SERBIAN,
-	STR_AUTO_AWAY_TAG,
-	STR_AUTO_AWAY,
-	STR_MINUTES,
-	STR_TOKEN_MESSAGE_STRING,
-	STR_CHANGE_THE_AUTO_AWAY_MESSAGE,
-	STR_AWAY_MESSAGE_SET_TO,
-	STR_FORCE_AWAY_STATE,
-	STR_OPEN_FOLDER,
-	STR_WATCH_PATTERN_SET_TO,
-	STR_WATCH_PATTERN_REMOVED,
-	STR_CURRENT_WATCH_PATTERN_IS,
-	STR_SPECIFY_USERS_TO_WATCH,
-	STR_ONLOGIN_COMMANDS_CLEARED,
-	STR_TOKEN_COMMAND,
-	STR_ADD_STARTUP_COMMAND, 
-	STR_CLEAR_STARTUP_COMMANDS,
-	STR_ADDED_STARTUP_COMMAND,
-	STR_WATCH,
-	STR_SERVER_STATUS_REQUESTED,
-	STR_MEMORY_USED_AVAILABLE,
-	STR_SERVER_STATUS,
-	STR_SERVER_VERSION,
-	STR_LOCAL_SESSION_ROOT,
-	STR_SERVER_MEMORY_USAGE,
-	STR_REQUEST_SERVER_STATUS,
-	STR_SERVER_UPTIME,
-	STR_WEEKS,
-	STR_DAYS,
-	STR_SYSTEM_UPTIME,
-	STR_LOGGED_IN_FOR,
-	STR_FILE_SHARING_ENABLED,
-	STR_BAN_USER_FOR,
-	STR_USER_AT_IP_PS_BANNED_FOR,
-	STR_HOURS,
-	STR_FOREVER,
-	STR_REMOVE_ALL_UPLOAD_BANS,
-	STR_REMOVING_PLU_UPLOAD_BANS,
-	STR_AUTOPRIV_PATTERN_SET_TO,
-	STR_AUTOPRIV_PATTERN_REMOVED,
-	STR_SPECIFY_AUTOPRIV_USERS,
-	STR_CURRENT_AUTOPRIV_PATTERN_IS,
-	STR_ERROR_UNKNOWN_DATA_FORMAT,
-	STR_OPEN_LOGS_FOLDER,
-	STR_STATUS,
-	STR_YOUR_STATUS_HAS_BEEN_CHANGED_TO,
-	STR_IS_NOW,
-	STR_LOAD,
-	STR_SET_USER_STATUS_STRING,
-	STR_BULGARIAN,
-	STR_PATH,
-	STR_RETAIN_FILE_PATHS,
-	STR_SET_ALIAS,
-	STR_REMOVED_ALIAS,
-	STR_TOKEN_NAME_AND_VALUE,
-	STR_CREATE_AN_ALIAS,
-	STR_REMOVE_AN_ALIAS,
-	STR_MOVE_TO_TOP,
-	STR_MOVE_TO_BOTTOM,
-	STR_SET_CUSTOM_WINDOW_TITLE,
-	STR_CUSTOM_WINDOW_TITLE_IS_NOW,
-	STR_AUTOUPDATE_SERVER_LIST,
-	STR_ADDED_SERVER,
-	STR_REMOVED_SERVER,
-	STR_BESHARE_UPGRADE_NOTICE,
-	STR_EXECUTE_SHELL_COMMAND,
-	STR_EXECUTING_SHELL_COMMAND,
-	STR_TOKEN_SHELL_COMMAND,
-	STR_IDLE_COMMAND_SET_TO,
-	STR_SET_COMMAND_FOR_WHEN_TRANSFERS_CEASE,
-	STR_TOKEN_FONT_SIZE,
-	STR_SET_FONT_SIZE,
-	STR_FONT_SIZE_SET_TO,
-	STR_FONT_SIZE_RESET_TO_DEFAULT,
-	STR_CLIENT,
-	STR_WILL_ATTEMPT_AUTO_RECONNECT_IN_PLU_MINUTES,
-	STR_ATTEMPTING_AUTO_RECONNECT,
-	STR_AUTO_RECONNECT_SEQUENCE_TERMINATED,
-	STR_KOREAN,
-	STR_LIMIT_BANDWIDTH,
-	STR_TOKEN_BYTES_PER_SECOND,
-	STR_SET_MAX_DOWNLOAD_RATE,
-	STR_SET_MAX_UPLOAD_RATE,
-	STR_MAX_DOWNLOAD_RATE_IS,
-	STR_MAX_UPLOAD_RATE_IS,
-	STR_HUNGARIAN,
-	STR_SET_COLORS,
-	STR_COLOR_BG,
-	STR_COLOR_SCROLLBG,
-	STR_COLOR_BORDERS,
-	STR_COLOR_TEXT,
-	STR_COLOR_SYSTEM,
-	STR_COLOR_WARNING,
-	STR_COLOR_ERROR,
-	STR_COLOR_ACTION,
-	STR_COLOR_PRIVATE,
-	STR_COLOR_NAMESAID,
-	STR_COLOR_PING,
-	STR_COLOR_LOCALNAME,
-	STR_COLOR_REMOTENAME,
-	STR_COLOR_URL,
-	STR_COLOR_SELECTION,
-	STR_COLOR_WATCH,
-	STR_COLOR_DOWNLOAD,
-	STR_COLOR_UPLOAD,
-	STR_COLOR_PAUSEDUPLOAD,
-	STR_COLOR_PREFS_BY,
-	STR_REVERT,
-	STR_DEFAULT,
-	STR_TOGGLE_CUSTOM_COLORS,
-	STR_ROMANIAN,
-	STR_SHARE_SCREENSHOT,
-	STR_IS_NOW_SHARING_A_SCREENSHOT,
-	STR_ERROR_SHARING_SCREENSHOT,
-	STR_HAS_FINISHED_DOWNLOADING,
-	STR_TRANSFER_REPORT,
-	STR_SHOW_MISCELLANEOUS_INFO,
-	STR_BANNED,
-	STR_UNTIL,
-	STR_DATA_COMPRESSION,
-	STR_LOW,
-	STR_MEDIUM,
-	STR_HIGH,
-	STR_SCHINESE,
-	STR_TURKISH,
-	STR_JAPANESE,
-	STR_TOKEN_FONT,
-	STR_SET_FONT,
-	STR_FONT_SET_TO,
-	STR_FONT_RESET_TO_DEFAULT,
-	STR_COULDNT_FIND_FONT,
-	STR_SHORTEST_UPLOADS_FIRST,
-	STR_FINNISH,
-	STR_UPTIME,
+	NUM_SHORTCUTS,
 	NUM_STRINGS
 };
+
+#define STR_ANONYMOUS	"Anonymous"
+#define STR_UNKNOWN	"Unknown"
+#define STR_IS_NOW_CONNECTED	" is now connected."
+#define STR_HAS_DISCONNECTED	" has disconnected."
+#define STR_USER_NUMBER	"User #"
+#define STR_AKA	" (a.k.a. "
+#define STR_IS_NOW_KNOWN_AS	" is now known as "
+#define STR_TRUE	"true"
+#define STR_FALSE	"false"
+#define STR_UNKNOWN_TYPE	"<unknown type>"
+#define STR_USER	"User "
+#define STR_IS_DOWNLOADING	" is downloading "
+#define STR_ERROR_WRITING_TO_FILE	"Error writing to file "
+#define STR_AN_ERROR_OCCURRED	"An Error Occurred."
+#define STR_QUEUED_LOCAL_MACHINE_TOO_BUSY	"Queued (Local machine too busy)"
+#define STR_QUEUED_REMOTE_MACHINE_TOO_BUSY	"Queued (Remote machine too busy)"
+#define STR_SENT	"Sent: "
+#define STR_RCVD	"Rcvd: "
+#define STR_SEC	"/sec, "
+#define STR_AWAITING_CALLBACK	"Awaiting callback..."
+#define STR_CONNECTING	"Connecting..."
+#define STR_DOWNLOAD_COMPLETE	"Download complete"
+#define STR_DOWNLOAD_ABORTED	"Download aborted"
+#define STR_COULDNT_CONNECT	"Couldn't connect"
+#define STR_PREPARING_TO_UPLOAD	"Preparing to Upload"
+#define STR_PREPARING_TO_DOWNLOAD	"Preparing to Download"
+#define STR_TO	"to"
+#define STR_FROM	"from"
+#define STR_ERROR_STARTING_DOWNLOAD_NO_ACCEPT_PORT	"Error starting download--no accept port!"
+#define STR_ERROR_STARTING_DELAYED_CONNECT	"Error starting delayed connect!"
+#define STR_ERROR_STARTING_DELAYED_CONNECT_NO_TRANSCEIVER_THREAD	"Error starting delayed connect--no transceiver thread!"
+#define STR_ERROR_COULDNT_CREATE_CONNECT_THREAD	"Error, couldn't create connect thread! (Try quitting BeShare, then Restarting Networking)"
+#define STR_SHARING_PERCENTI_LOCAL_FILES	"(Sharing %i files)"
+#define STR_COULDNT_FIND_SHARED_SUBDIRECTORY_FILE_SHARING_DISABLED	"Couldn't find 'shared' subdirectory, file sharing disabled!"
+#define STR_FILE_NAME_KEY	"\0011File Name"
+#define STR_USER_KEY	"\0012User"
+#define STR_SESSIONID_KEY	"\0013SessionID"
+#define STR_CONNECTION_KEY	"\0014Connection"
+#define STR_FILE	"File"
+#define STR_CONNECT_TO_SERVER	"Connect to server"
+#define STR_DISCONNECT	"Disconnect"
+#define STR_OPEN_SHARED_FOLDER	"Open Shared Folder"
+#define STR_OPEN_DOWNLOADS_FOLDER	"Open Downloads Folder"
+#define STR_CLEAR_CHAT_LOG	"Clear Chat Log"
+#define STR_RESET_LAYOUT	"Reset Layout"
+#define STR_ABOUT_BESHARE	"About BeShare"
+#define STR_QUIT	"Quit"
+#define STR_ATTRIBUTES	"Attributes"
+#define STR_SETTINGS	"Settings"
+#define STR_MAX_SIMULTANEOUS_UPLOADS	"Max Simultaneous Uploads"
+#define STR_MAX_SIMULTANEOUS_DOWNLOADS	"Max Simultaneous Downloads"
+#define STR_NO_LIMIT	"No Limit"
+#define STR_UPLOAD_BANDWIDTH	"Upload Bandwidth"
+#define STR_LOG	"Log"
+#define STR_UPLOADS	"Uploads"
+#define STR_USER_EVENTS	"User Events"
+#define STR_QUERY_CHANGES	"Query Changes"
+#define STR_FULL_USER_QUERIES	"Full User Queries"
+#define STR_IM_FIREWALLED	"I'm Firewalled"
+#define STR_QUERY	"Query:"
+#define STR_START_QUERY	"Start Query"
+#define STR_STOP_QUERY	"Stop Query"
+#define STR_SERVER	"Server:"
+#define STR_USER_NAME_COLON	"User Name:"
+#define STR_DOWNLOAD_SELECTED_FILES	"Download Selected Files"
+#define STR_CLEAR_FINISHED_FAILED_TRANSFERS	"Clear Finished/Failed Transfers"
+#define STR_REMOVE_SELECTED	"Remove Selected"
+#define STR_CHAT_NOUN	"Chat"
+#define STR_NAME	"Name"
+#define STR_ID	"ID"
+#define STR_BESHARE_IS_LISTENING_ON_PORT_PERCENTU	"BeShare is listening on port %u.  Select Connect from the File menu to begin!"
+#define STR_COULDNT_START_FILE_SHARING_THREAD	"Couldn't start file-sharing server thread!  (Try Restarting Networking, then restarting BeShare)"
+#define STR_CANT_DOWNLOAD_FROM_USER	"Can't download from user "
+#define STR_COMMA_NO_CONNECTION_INFORMATION_AVAILABLE	", no connection information available."
+#define STR_CANT_DOWNLOAD_FILES_FROM	"Can't download files from "
+#define STR_BECAUSE_BOTH_OF_US_ARE_BEHIND_FIREWALLS	", because both of us are behind firewalls."
+#define STR_FILE_DOWNLOAD_ACCEPT_SESSION_FOR	"File download accept session for "
+#define STR_FAILED_TO_INITIALIZE	" failed to initialize!"
+#define STR_FILE_DOWNLOAD_SESSION_TO	"File download session to "
+#define STR_CHANGED_QUERY_TO	"Changed Query to"
+#define STR_STARTED_QUERY	"Started Query"
+#define STR_COULDNT_START_SHAREFILETRANSFER_SESSION	"Couldn't start ShareFileTransfer session to serve remote transfer request!  (Try Restarting Networking, then restarting BeShare)"
+#define STR_YOUR_NAME_HAS_BEEN_CHANGED_TO	"Your name has been changed to "
+#define STR_BY	"by"
+#define STR_UNKNOWN_USER	"Unknown user "
+#define STR_MESSAGE	", message \""""
+#define STR_NOT_SENT	""	\"" not sent."",""
+#define STR_NO_TARGET_USER_SPECIFIED_IN_MSG	"No target user specified in /msg"
+#define STR_STOPPED_QUERY	"Stopped Query"
+#define STR_SYSTEM	"System"
+#define STR_WARNING	"Warning"
+#define STR_ERROR	"Error"
+#define STR_ACTION	"Action"
+#define STR_CONNECT_TO	"Connect to "
+#define STR_CONNECTING_TO	" - Connecting to "
+#define STR_PERCENTLU_RESULTS_SHOWN	" - %lu results shown ("
+#define STR_CONNECTED_TO	" - Connected to "
+#define STR_CONNECTION_ESTABLISHED	"Connection established."
+#define STR_CONNECTING_TO_SERVER_DOTDOTDOT	"Connecting to server..."
+#define STR_YOU_ARE_NO_LONGER_CONNECTED_TO_THE_MUSCLE_SERVER	"You are no longer connected to the MUSCLE server."
+#define STR_CONNECTION_TO_SERVER_FAILED	"Connection to server failed."
+#define STR_ENGLISH	"English"
+#define STR_SPANISH	"Spanish"
+#define STR_LANGUAGE_SELECTED	"Language %s selected.  Change will take effect after you restart BeShare."
+#define STR_LANGUAGE	"Language"
+#define STR_GERMAN	"German"
+#define STR_KIND	"Kind"
+#define STR_FILE_SIZE	"File Size"
+#define STR_FILES	"Files"
+#define STR_DUTCH	"Dutch"
+#define STR_EXAMINING_FILES	"Examining Files..."
+#define STR_AVAILABLE_IRC_STYLE_COMMANDS	"Available irc-style commands:"
+#define STR_SEND_A_PRIVATE_MESSAGE	"send a private message"
+#define STR_CHANGE_YOUR_USER_NAME	"change your user name"
+#define STR_DO_SOMETHING	"do something"
+#define STR_SYNONYM_FOR_ACTION	"synonym for /action"
+#define STR_CLEAR_THE_CHAT_LOG	"clear the chat log"
+#define STR_START_A_NEW_QUERY	"start a new query"
+#define STR_STOP_THE_CURRENT_QUERY	"stop the current query"
+#define STR_CONNECT_TO_A_SERVER	"connect to a server"
+#define STR_DISCONNECT_FROM_THE_SERVER	"disconnect from the server"
+#define STR_QUIT_BESHARE	"quit BeShare"
+#define STR_SHOW_THIS_HELP_TEXT	"show this help text"
+#define STR_TOKEN_NAME_OR_SESSION_ID_TEXT	"<name or session id> <text>"
+#define STR_TOKEN_NAME	"<name>"
+#define STR_TOKEN_ACTION	"<action>"
+#define STR_TOKEN_QUERY_STRING	"[queryString]"
+#define STR_TOKEN_SERVER_NAME	"[serverName]"
+#define STR_PORTUGUESE	"Portuguese"
+#define STR_FRENCH	"French"
+#define STR_BEEP_WHEN_MENTIONED	"Beep When Mentioned"
+#define STR_MAX_SIMULTANEOUS_UPLOADS_PER_USER	"Max Simultaneous Uploads Per User"
+#define STR_TIMESTAMPS	"Timestamps"
+#define STR_AUTOCLEAR_COMPLETED_DOWNLOADS	"AutoClear Finished Downloads"
+#define STR_MAX_SIMULTANEOUS_DOWNLOADS_PER_USER	"Max Simultaneous Downloads Per User"
+#define STR_ITALIAN	"Italian"
+#define STR_LOGIN_ON_STARTUP	"Login on Startup"
+#define STR_PRIVATE_MESSAGES	"Private Messages"
+#define STR_OPEN_PRIVATE_CHAT_WINDOW	"Open Private Chat Window"
+#define STR_BESHARE_PRIVATE_CHAT	"BeShare Private Chat Window"
+#define STR_CHAT_WITH	"Chat With:"
+#define STR_ERROR_NO_USER_SPECIFIED	"Error, no user specified!"
+#define STR_SAVE_PRESET	"Save Preset"
+#define STR_RESTORE_PRESET	"Restore Preset"
+#define STR_ERROR_UNKNOWN_COMMAND	"Error, unknown command"
+#define STR_TYPE_HELP_FOR_LIST_OF_AVAILABLE_COMMANDS	"Type /help for a list of available commands."
+#define STR_PERCENTLU_DASH_PERCENTLU_OF_PERCENTLU_RESULTS_SHOWN	" - (%lu-%lu) of %lu results shown ("
+#define STR_DISPLAY	"Display"
+#define STR_INFO_MESSAGES	"Info Messages"
+#define STR_WARNING_MESSAGES	"Warning Messages"
+#define STR_ERROR_MESSAGES	"Error Messages"
+#define STR_LOGGING_ENABLED	"Logging Enabled"
+#define STR_LOGGING_DISABLED	"Logging Disabled"
+#define STR_RESULTS_PER_PAGE	"Results Per Page"
+#define STR_SWITCH_TO_PAGE	"Switch to Page"
+#define STR_SPECIFY_USERS_TO_IGNORE	"specify users to ignore"
+#define STR_IGNORE_PATTERN_SET_TO	"Ignore pattern set to: "
+#define STR_IGNORE_PATTERN_REMOVED	"Ignore pattern removed."
+#define STR_TOKEN_NAMES_OR_SESSION_IDS	"<names or session ids>"
+#define STR_MOVE_UP	"Move Up"
+#define STR_MOVE_DOWN	"Move Down"
+#define STR_HALT_DOWNLOAD	"Halt Transfer"
+#define STR_RESTART_DOWNLOAD	"Restart Transfer"
+#define STR_OPEN_FILE	"Open File"
+#define STR_RUSSIAN	"Russian"
+#define STR_CHAT_VERB	"Chat"
+#define STR_CURRENT_IGNORE_PATTERN_IS	"Current /ignore pattern is: "
+#define STR_DISABLED	"Disabled"
+#define STR_TRANSFERS_IN_PROGRESS_ARE_YOU_SURE_YOU_WANT_TO_QUIT	"There are %i transfers in progress, are you sure you want to quit?"
+#define STR_DONT_QUIT	"Don't Quit"
+#define STR_MODIFICATION_TIME	"Modification Time"
+#define STR_ESPERANTO	"Esperanto"
+#define STR_SWEDISH	"Swedish"
+#define STR_PING_OTHER_CLIENTS	"ping other clients"
+#define STR_PING_REPLY_LIMS	"Ping returned in %Li milliseconds"
+#define STR_SENT_PING_REQUEST_TO	"Sent ping request to: "
+#define STR_NORWEGIAN	"Norwegian"
+#define STR_SERBIAN	"Serbian"
+#define STR_AUTO_AWAY_TAG	"away"
+#define STR_AUTO_AWAY	"Auto Away"
+#define STR_MINUTES	"minutes"
+#define STR_TOKEN_MESSAGE_STRING	"tag"
+#define STR_CHANGE_THE_AUTO_AWAY_MESSAGE	"change the auto-away tag"
+#define STR_AWAY_MESSAGE_SET_TO	"Auto-away tag set to: "
+#define STR_FORCE_AWAY_STATE	"Force away state"
+#define STR_OPEN_FOLDER	"Open Folder"
+#define STR_WATCH_PATTERN_SET_TO	"Watch pattern set to: "
+#define STR_WATCH_PATTERN_REMOVED	"Watch pattern removed."
+#define STR_CURRENT_WATCH_PATTERN_IS	"Current /watch pattern is: "
+#define STR_SPECIFY_USERS_TO_WATCH	"specify users to watch"
+#define STR_ONLOGIN_COMMANDS_CLEARED	"Startup commands cleared."
+#define STR_TOKEN_COMMAND	"command"
+#define STR_ADD_STARTUP_COMMAND	"add startup command"
+#define STR_CLEAR_STARTUP_COMMANDS	"clear startup commands"
+#define STR_ADDED_STARTUP_COMMAND	"Recorded startup command: "
+#define STR_WATCH	"Watch"
+#define STR_SERVER_STATUS_REQUESTED	"Server status requested."
+#define STR_MEMORY_USED_AVAILABLE	"%.1fMB used (%.1fMB available)"
+#define STR_SERVER_STATUS	"Server status:"
+#define STR_SERVER_VERSION	"Server version"
+#define STR_LOCAL_SESSION_ROOT	"Local session root"
+#define STR_SERVER_MEMORY_USAGE	"Server memory usage"
+#define STR_REQUEST_SERVER_STATUS	"Request server status"
+#define STR_SERVER_UPTIME	"Server uptime"
+#define STR_WEEKS	"weeks"
+#define STR_DAYS	"days"
+#define STR_SYSTEM_UPTIME	"System Uptime"
+#define STR_LOGGED_IN_FOR	"logged in for"
+#define STR_FILE_SHARING_ENABLED	"File Sharing Enabled"
+#define STR_BAN_USER_FOR	"Ban User For"
+#define STR_USER_AT_IP_PS_BANNED_FOR	"User at IP %s banned for"
+#define STR_HOURS	"Hours"
+#define STR_FOREVER	"Forever"
+#define STR_REMOVE_ALL_UPLOAD_BANS	"remove all upload bans"
+#define STR_REMOVING_PLU_UPLOAD_BANS	"Removing %lu upload bans"
+#define STR_AUTOPRIV_PATTERN_SET_TO	"AutoPriv pattern set to: "
+#define STR_AUTOPRIV_PATTERN_REMOVED	"AutoPriv pattern removed."
+#define STR_SPECIFY_AUTOPRIV_USERS	"specify AutoPriv users"
+#define STR_CURRENT_AUTOPRIV_PATTERN_IS	"Current /autopriv pattern is: "
+#define STR_ERROR_UNKNOWN_DATA_FORMAT	"Unknown data format!"
+#define STR_OPEN_LOGS_FOLDER	"Open Logs Folder"
+#define STR_STATUS	"Status"
+#define STR_YOUR_STATUS_HAS_BEEN_CHANGED_TO	"Your status has been changed to: "
+#define STR_IS_NOW	" is now "
+#define STR_LOAD	"Load"
+#define STR_SET_USER_STATUS_STRING	"set user status string"
+#define STR_BULGARIAN	"Bulgarian"
+#define STR_PATH	"Path"
+#define STR_RETAIN_FILE_PATHS	"Retain File Paths"
+#define STR_SET_ALIAS	"Set alias"
+#define STR_REMOVED_ALIAS	"Removed alias"
+#define STR_TOKEN_NAME_AND_VALUE	"[name and value]"
+#define STR_CREATE_AN_ALIAS	"create an alias"
+#define STR_REMOVE_AN_ALIAS	"remove an alias"
+#define STR_MOVE_TO_TOP	"Move to Top"
+#define STR_MOVE_TO_BOTTOM	"Move to Bottom"
+#define STR_SET_CUSTOM_WINDOW_TITLE	"set custom window title"
+#define STR_CUSTOM_WINDOW_TITLE_IS_NOW	"Custom window title is now"
+#define STR_AUTOUPDATE_SERVER_LIST	"AutoUpdate Server List"
+#define STR_ADDED_SERVER	"Added server: %s"
+#define STR_REMOVED_SERVER	"Removed server: %s"
+#define STR_BESHARE_UPGRADE_NOTICE	"BeShare v%s is now available for download.  You can upgrade at %s"
+#define STR_EXECUTE_SHELL_COMMAND	"execute shell command"
+#define STR_EXECUTING_SHELL_COMMAND	"Executing shell command"
+#define STR_TOKEN_SHELL_COMMAND	"shell command"
+#define STR_IDLE_COMMAND_SET_TO	"idle command set to"
+#define STR_SET_COMMAND_FOR_WHEN_TRANSFERS_CEASE	"set command for when transfers cease"
+#define STR_TOKEN_FONT_SIZE	"font size in points"
+#define STR_SET_FONT_SIZE	"set font size"
+#define STR_FONT_SIZE_SET_TO	"Font size set to:"
+#define STR_FONT_SIZE_RESET_TO_DEFAULT	"Font size reset to default"
+#define STR_CLIENT	"Client"
+#define STR_WILL_ATTEMPT_AUTO_RECONNECT_IN_PLU_MINUTES	"Will attempt auto-reconnect in %lu minutes."
+#define STR_ATTEMPTING_AUTO_RECONNECT	"Attempting auto-reconnect."
+#define STR_AUTO_RECONNECT_SEQUENCE_TERMINATED	"Auto-reconnect sequence terminated."
+#define STR_KOREAN	"Korean"
+#define STR_LIMIT_BANDWIDTH	"Limit Bandwidth"
+#define STR_TOKEN_BYTES_PER_SECOND	"bytes/second"
+#define STR_SET_MAX_DOWNLOAD_RATE	"Set max download rate (per transfer)"
+#define STR_SET_MAX_UPLOAD_RATE	"Set max upload rate (per transfer)"
+#define STR_MAX_DOWNLOAD_RATE_IS	"Max download rate is"
+#define STR_MAX_UPLOAD_RATE_IS	"Max upload rate is"
+#define STR_HUNGARIAN	"Hungarian"
+#define STR_SET_COLORS	"Choose Colors"
+#define STR_COLOR_BG	"Text Background"
+#define STR_COLOR_SCROLLBG	"Scrolled Text Background"
+#define STR_COLOR_BORDERS	"Border Areas"
+#define STR_COLOR_TEXT	"Text"
+#define STR_COLOR_SYSTEM	"System"
+#define STR_COLOR_WARNING	"Warning"
+#define STR_COLOR_ERROR	"Error"
+#define STR_COLOR_ACTION	"Action"
+#define STR_COLOR_PRIVATE	"Private"
+#define STR_COLOR_NAMESAID	"Name Said"
+#define STR_COLOR_PING	"Ping"
+#define STR_COLOR_LOCALNAME	"Local Nick"
+#define STR_COLOR_REMOTENAME	"Remote Nick"
+#define STR_COLOR_URL	"URL"
+#define STR_COLOR_SELECTION	"Selection"
+#define STR_COLOR_WATCH	"Watch"
+#define STR_COLOR_DOWNLOAD	"Download Progress"
+#define STR_COLOR_UPLOAD	"Upload Progress"
+#define STR_COLOR_PAUSEDUPLOAD	"Paused Upload Progress"
+#define STR_COLOR_PREFS_BY	"Color prefs by"
+#define STR_REVERT	"Revert"
+#define STR_DEFAULT	"Default"
+#define STR_TOGGLE_CUSTOM_COLORS	"toggle custom coloring"
+#define STR_ROMANIAN	"Romanian"
+#define STR_SHARE_SCREENSHOT	"share screenshot"
+#define STR_IS_NOW_SHARING_A_SCREENSHOT	"is now sharing a screenshot"
+#define STR_ERROR_SHARING_SCREENSHOT	"Error sharing screenshot"
+#define STR_HAS_FINISHED_DOWNLOADING	" has finished downloading "
+#define STR_TRANSFER_REPORT	"Transferred this session:  %s down, %s up."
+#define STR_SHOW_MISCELLANEOUS_INFO	"show some miscellaneous info"
+#define STR_BANNED	"Banned"
+#define STR_UNTIL	"until"
+#define STR_DATA_COMPRESSION	"Data Compression"
+#define STR_LOW	"Low"
+#define STR_MEDIUM	"Medium"
+#define STR_HIGH	"High"
+#define STR_SCHINESE	"Chinese (Simplified)"
+#define STR_TURKISH	"Turkish"
+#define STR_JAPANESE	"Japanese"
+#define STR_TOKEN_FONT	"[font name]"
+#define STR_SET_FONT	"set font"
+#define STR_FONT_SET_TO	"Font set to"
+#define STR_FONT_RESET_TO_DEFAULT	"Font reset to default"
+#define STR_COULDNT_FIND_FONT	"Couldn't find font"
+#define STR_SHORTEST_UPLOADS_FIRST	"Shortest Uploads First"
+#define STR_FINNISH	"Finnish"
+#define STR_UPTIME	"Display uptime"
 
 };  // end namespace beshare
 

@@ -3,10 +3,10 @@
 #include <Clipboard.h>
 #include <Box.h>
 #include <Path.h>
-#include <Catalog.h>
 #include <Beep.h>
 
 #include <Application.h>
+#include <FindDirectory.h>
 #include <Roster.h>
 #include <MessageFilter.h>
 #include <StringView.h>
@@ -20,8 +20,8 @@
 #include "ShareUtils.h"
 #include "ShareStrings.h"
 
-#undef B_TRANSLATE_CONTEXT
-#define B_TRANSLATE_CONTEXT "ChatWindow"
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ChatWindow"
 
 namespace beshare {
 
@@ -287,23 +287,23 @@ ChatWindow::LogMessage(LogMessageType type, const char * inText, const char * op
 				case LOG_INFORMATION_MESSAGE:
 				case LOG_USER_EVENT_MESSAGE:
 				case LOG_UPLOAD_EVENT_MESSAGE:
-					preamble = str(STR_SYSTEM);
+					preamble = B_TRANSLATE(STR_SYSTEM);
 					color = GetColor(COLOR_SYSTEM);
 				break;
 
 				case LOG_WARNING_MESSAGE:
-					preamble = str(STR_WARNING);
+					preamble = B_TRANSLATE(STR_WARNING);
 					color = GetColor(COLOR_WARNING);
 				break;
 
 				case LOG_ERROR_MESSAGE:
-					preamble = str(STR_ERROR);
+					preamble = B_TRANSLATE(STR_ERROR);
 					color = GetColor(COLOR_ERROR);
 				break;
 
 				case LOG_LOCAL_USER_CHAT_MESSAGE:
 					if ((strncmp(text, "/me ", 4) == 0)||(strncmp(text, "/me\'", 4) == 0)) {
-						preamble = str(STR_ACTION);
+						preamble = B_TRANSLATE(STR_ACTION);
 
 						GetLocalUserName(temp);
 						temp += &text[3];
@@ -338,7 +338,7 @@ ChatWindow::LogMessage(LogMessageType type, const char * inText, const char * op
 					{
 						if ((strncmp(text, "/me ", 4) == 0)||(strncmp(text, "/me\'", 4) == 0))
 						{
-							preamble = str(STR_ACTION);
+							preamble = B_TRANSLATE(STR_ACTION);
 							GetUserNameForSession(optSessionID, temp);
 							temp += &text[3];
 							text = temp();
@@ -1009,11 +1009,11 @@ ChatWindow::SetFontSize(const String & cmdString)
 	{
 		char buf[64];
 		sprintf(buf, " %.0f", fs);
-		String s(str(STR_FONT_SIZE_SET_TO));
+		String s(B_TRANSLATE(STR_FONT_SIZE_SET_TO));
 		s += buf;
 		LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, this);
 	}
-	else LogMessage(LOG_INFORMATION_MESSAGE, str(STR_FONT_SIZE_RESET_TO_DEFAULT), NULL, NULL, false, this);
+	else LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_FONT_SIZE_RESET_TO_DEFAULT), NULL, NULL, false, this);
 }
 
 
@@ -1059,7 +1059,7 @@ ChatWindow::SetFont(const String & fontString, bool doLog)
 			_fontName = useFamily;
 			if (doLog)
 			{
-				String s(str(STR_FONT_SET_TO));
+				String s(B_TRANSLATE(STR_FONT_SET_TO));
 				s += ' ';
 				s += _fontName;
 				LogMessage(LOG_INFORMATION_MESSAGE, s(), NULL, NULL, false, this);
@@ -1067,7 +1067,7 @@ ChatWindow::SetFont(const String & fontString, bool doLog)
 		}
 		else if (doLog)
 		{
-			String s = str(STR_COULDNT_FIND_FONT);
+			String s = B_TRANSLATE(STR_COULDNT_FIND_FONT);
 			s += ": ";
 			s += fs;
 			LogMessage(LOG_ERROR_MESSAGE, s(), NULL, NULL, false, this);
@@ -1076,7 +1076,7 @@ ChatWindow::SetFont(const String & fontString, bool doLog)
 	else
 	{
 		_fontName = "";
-		if (doLog) LogMessage(LOG_INFORMATION_MESSAGE, str(STR_FONT_RESET_TO_DEFAULT), NULL, NULL, false, this);
+		if (doLog) LogMessage(LOG_INFORMATION_MESSAGE, B_TRANSLATE(STR_FONT_RESET_TO_DEFAULT), NULL, NULL, false, this);
 	}
 }
 
@@ -1166,22 +1166,32 @@ ChatWindow::AddBorderView(BView * v)
 status_t
 ChatWindow::GetAppSubdir(const char * subDirName, BDirectory & subDir, bool createIfNecessary) const
 {
-	app_info appInfo;
-	be_app->GetAppInfo(&appInfo);
-	BEntry appEntry(&appInfo.ref);
-	appEntry.GetParent(&appEntry);  // get the directory it's in
-	BPath path(&appEntry);
-	BPath subPath(&appEntry);
-	subPath.Append(subDirName);
+	directory_which which = B_USER_DIRECTORY;
+	if (!strcmp(subDirName, "logs"))
+		which = B_USER_LOG_DIRECTORY;
+	BPath path;
+	status_t err;
+
+	err = find_directory(which, &path, true);
+	if (err != B_OK)
+		return err;
+
+	BDirectory baseDir(path.Path());
+	err = baseDir.InitCheck();
+	if (err != B_OK)
+		return err;
+
+	BString leaf("BeShare");
+	if (strcmp(subDirName, "logs"))
+		leaf << " " << subDirName;
 
 	// If the directory is already there, use it
-	if (subDir.SetTo(subPath.Path()) == B_NO_ERROR) return B_NO_ERROR;
+	if (subDir.SetTo(&baseDir, leaf.String()) == B_NO_ERROR) return B_NO_ERROR;
 
 	// Directory not there?  Shall we create it then?
 	if (createIfNecessary)
 	{
-		BDirectory appDir(path.Path());
-		if ((appDir.InitCheck() == B_NO_ERROR)&&(appDir.CreateDirectory(subDirName, &subDir) == B_NO_ERROR)) return B_NO_ERROR;
+		if (baseDir.CreateDirectory(leaf.String(), &subDir) == B_NO_ERROR) return B_NO_ERROR;
 	}
 	return B_ERROR;  // oops, couldn't get it
 }
@@ -1206,7 +1216,7 @@ ChatWindow::ReadyToRun()
 
 	_chatScrollView = new BScrollView(NULL, _chatText, 0L, false, true, B_FANCY_BORDER);
 
-	String chat(str(STR_CHAT_VERB));
+	String chat(B_TRANSLATE(STR_CHAT_VERB));
 	chat += ':';
 	_textEntry = new BTextControl(NULL, chat(), NULL, NULL);
 

@@ -11,7 +11,6 @@
 #include "ColorPicker.h"
 
 #include <MenuField.h>
-#include <Catalog.h>
 #include <MenuItem.h>
 
 #include "ShareUtils.h"
@@ -19,8 +18,8 @@
 #include "ShareStrings.h"
 
 
-#undef B_TRANSLATE_CONTEXT
-#define B_TRANSLATE_CONTEXT "ColorPicker"
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ColorPicker"
 
 
 namespace beshare {
@@ -29,7 +28,7 @@ enum { CP_BUTTON_REVERT = 'cpBR', CP_BUTTON_DEFAULT, CP_COL_UPDATE, CP_SELECTION
 
 const int CP_COL_WIDTH = 10;
 
-ColorPicker::ColorPicker(BLooper * target) : BWindow(BRect(50, 75, 100 + (CP_COL_WIDTH * 32), 120 + (CP_COL_WIDTH * 8)), str(STR_SET_COLORS), B_TITLED_WINDOW, B_NOT_ZOOMABLE | B_NOT_RESIZABLE), _target(target), _whichColor(0)
+ColorPicker::ColorPicker(BLooper * target) : BWindow(BRect(50, 75, 100 + (CP_COL_WIDTH * 32), 120 + (CP_COL_WIDTH * 8)), B_TRANSLATE(STR_SET_COLORS), B_TITLED_WINDOW, B_NOT_ZOOMABLE | B_NOT_RESIZABLE), _target(target), _whichColor(0)
 {
 	const float margin = 5.0f;
 	const float topRowHeight = 25.0f;
@@ -41,13 +40,13 @@ ColorPicker::ColorPicker(BLooper * target) : BWindow(BRect(50, 75, 100 + (CP_COL
 	view->SetViewColor(BeBackgroundGrey);
   
 	const BRect & bounds = view->Bounds(); 
-	float revertWidth = view->StringWidth(str(STR_REVERT))+10.0f;
+	float revertWidth = view->StringWidth(B_TRANSLATE(STR_REVERT))+10.0f;
 	BRect revertBounds(bounds.right-(revertWidth+margin), margin, bounds.right-margin, margin+topRowHeight);
-	view->AddChild(_revert = new BButton(revertBounds, NULL, str(STR_REVERT), new BMessage(CP_BUTTON_REVERT)));
+	view->AddChild(_revert = new BButton(revertBounds, NULL, B_TRANSLATE(STR_REVERT), new BMessage(CP_BUTTON_REVERT)));
 
-	float defaultWidth = view->StringWidth(str(STR_DEFAULT))+10.0f;
+	float defaultWidth = view->StringWidth(B_TRANSLATE(STR_DEFAULT))+10.0f;
 	BRect defaultBounds(revertBounds.left-(margin+defaultWidth), revertBounds.top, revertBounds.left-margin, revertBounds.bottom);
-	view->AddChild(_default = new BButton(defaultBounds, NULL, str(STR_DEFAULT), new BMessage(CP_BUTTON_DEFAULT)));
+	view->AddChild(_default = new BButton(defaultBounds, NULL, B_TRANSLATE(STR_DEFAULT), new BMessage(CP_BUTTON_DEFAULT)));
 	
 	view->AddChild(_sampleView = new BView(BRect(margin, margin, margin+topRowHeight, margin+topRowHeight), NULL, B_FOLLOW_TOP|B_FOLLOW_LEFT, B_WILL_DRAW));
 
@@ -57,7 +56,7 @@ ColorPicker::ColorPicker(BLooper * target) : BWindow(BRect(50, 75, 100 + (CP_COL
 	{
 		BMessage * msg = new BMessage(CP_SELECTION_CHANGED);
 		msg->AddInt32("which", i);
-		BMenuItem * mi = new BMenuItem(str(STR_COLOR_BG+i), msg);
+		BMenuItem * mi = new BMenuItem(B_TRANSLATE(STR_COLOR_BG+i), msg);
 		_colorMenu->AddItem(mi);
 		if (i==0) mi->SetMarked(true);
 	}

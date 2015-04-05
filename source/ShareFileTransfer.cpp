@@ -21,6 +21,9 @@
 #include "ShareUtils.h"
 #include "md5.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "ShareFileTransfer"
+
 namespace beshare {
 #define CLASSNAME "ShareFileTransfer"
 
@@ -247,8 +250,8 @@ ShareFileTransfer::ShareFileTransfer(const BDirectory& fileDir, const char* loca
 	_uploadSession(false),
 	_bitmap(NULL),
 	_localSessionID(localSessionID),
-	_remoteUserName(str(STR_UNKNOWN)),
-	_displayRemoteUserName(str(STR_UNKNOWN)),
+	_remoteUserName(B_TRANSLATE(STR_UNKNOWN)),
+	_displayRemoteUserName(B_TRANSLATE(STR_UNKNOWN)),
 	_remoteIP(0),
 	_isAccepting(false),
 	_isAcceptSession(false),
@@ -333,7 +336,7 @@ ShareFileTransfer::SetFromArchive(const BMessage & archive)
 	if (archive.FindInt64("partialhashsize",	(int64*)&_partialHashSize) != B_NO_ERROR) _partialHashSize	= 0;
 	if (archive.FindInt64("remoteinstallid",	(int64*)&_remoteInstallID) != B_NO_ERROR) _remoteInstallID	= 0;
 	const char * temp;
-	_remoteUserName = (archive.FindString("remoteusername", &temp) == B_NO_ERROR) ? temp : str(STR_UNKNOWN);
+	_remoteUserName = (archive.FindString("remoteusername", &temp) == B_NO_ERROR) ? temp : B_TRANSLATE(STR_UNKNOWN);
 	_displayRemoteUserName = SubstituteLabelledURLs(_remoteUserName).Trim();
 
 	const char * nextFile;
@@ -831,18 +834,18 @@ ShareFileTransfer::DoUploadAux()
 				return false;
 			}
 		} else {
-			String userString(str(STR_USER_NUMBER));
+			String userString(B_TRANSLATE(STR_USER_NUMBER));
 			userString += _remoteSessionID;
 			if ((_remoteUserName.Length() > 0)
 				&& (_remoteUserName[0])) {
-				userString += str(STR_AKA);
+				userString += B_TRANSLATE(STR_AKA);
 				userString += _remoteUserName;
 				userString += ")";
 			}
 
 			if (_currentFileName.Length() > 0) {
 				String finishedDownloading = userString;
-				finishedDownloading += str(STR_HAS_FINISHED_DOWNLOADING);
+				finishedDownloading += B_TRANSLATE(STR_HAS_FINISHED_DOWNLOADING);
 				finishedDownloading += _currentFileName;
 				((ShareWindow*)Looper())->LogMessage(LOG_UPLOAD_EVENT_MESSAGE, finishedDownloading());
 			}
@@ -863,7 +866,7 @@ ShareFileTransfer::DoUploadAux()
 						_currentFileIndex++;
 
 						String isDownloading = userString;
-						isDownloading += str(STR_IS_DOWNLOADING);
+						isDownloading += B_TRANSLATE(STR_IS_DOWNLOADING);
 						isDownloading += _currentFileName;
 						((ShareWindow*)Looper())->LogMessage(LOG_UPLOAD_EVENT_MESSAGE, isDownloading());
 
@@ -1175,7 +1178,7 @@ ShareFileTransfer::MessageReceived(const MessageRef& msgRef)
 						default:
 						{
 							// Oh dear.	This should never happen....
-							String errStr(str(STR_ERROR_UNKNOWN_DATA_FORMAT));
+							String errStr(B_TRANSLATE(STR_ERROR_UNKNOWN_DATA_FORMAT));
 							((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, errStr());
 							abortSession = true;
 						}
@@ -1201,7 +1204,7 @@ ShareFileTransfer::MessageReceived(const MessageRef& msgRef)
 						if (OnceEvery(OPTIONAL_REFRESH_INTERVAL, _lastRefreshTime))
 							((ShareWindow*)Looper())->RefreshTransferItem(this);
 					} else {
-						String errStr(str(STR_ERROR_WRITING_TO_FILE));
+						String errStr(B_TRANSLATE(STR_ERROR_WRITING_TO_FILE));
 						errStr += _currentFileName;
 						((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, errStr());
 						abortSession = true;
@@ -1438,13 +1441,13 @@ ShareFileTransfer::DrawItem(BView* lv, BRect itemRect, bool /*complete*/)
 		bool addSizeData = true;
 		if (_errorOccurred) {
 			if (_banEndTime > 0) {
-				text = str(STR_BANNED);
+				text = B_TRANSLATE(STR_BANNED);
 				if (_banEndTime != BESHARE_UNKNOWN_BAN_TIME_LEFT) {
 					text += ' ';
 					if (_banEndTime == ((uint64)-1))
-						text += str(STR_FOREVER);
+						text += B_TRANSLATE(STR_FOREVER);
 					else {
-						text += str(STR_UNTIL);
+						text += B_TRANSLATE(STR_UNTIL);
 						time_t tt = _banEndTime/1000000;
 						struct tm * t = localtime(&tt);
 						if (t) {
@@ -1469,17 +1472,17 @@ ShareFileTransfer::DrawItem(BView* lv, BRect itemRect, bool /*complete*/)
 					}
 				}
 			} else
-				text = str(STR_AN_ERROR_OCCURRED);
+				text = B_TRANSLATE(STR_AN_ERROR_OCCURRED);
 		} else {
 			if (_isWaitingOnLocal)
-				text = str(STR_QUEUED_LOCAL_MACHINE_TOO_BUSY);
+				text = B_TRANSLATE(STR_QUEUED_LOCAL_MACHINE_TOO_BUSY);
 			else if (_isWaitingOnRemote)
-				text = str(STR_QUEUED_REMOTE_MACHINE_TOO_BUSY);
+				text = B_TRANSLATE(STR_QUEUED_REMOTE_MACHINE_TOO_BUSY);
 			else if (_isConnected) {
 				if (_md5Loopers.GetNumItems() > 0)
-					text = str(STR_EXAMINING_FILES);
+					text = B_TRANSLATE(STR_EXAMINING_FILES);
 				else {
-					text = _uploadSession ? str(STR_SENT) : str(STR_RCVD);
+					text = _uploadSession ? B_TRANSLATE(STR_SENT) : B_TRANSLATE(STR_RCVD);
 
 					bool useCurrent = (_currentFileSize > 0);
 					text += GetFileSizeDataString(useCurrent ? _currentFileBytesDone : _saveLastFileBytesDone, useCurrent ? _currentFileSize : _saveLastFileSize);
@@ -1502,7 +1505,7 @@ ShareFileTransfer::DrawItem(BView* lv, BRect itemRect, bool /*complete*/)
 							char buf[32];
 							GetByteSizeString(bytesPerSecond, buf);
 							text += buf;
-							text += str(STR_SEC);
+							text += B_TRANSLATE(STR_SEC);
 
 							if (secondsToGo >= (60*60))
 								sprintf(buf, "%Lu:%02Lu:%02Lu", secondsToGo/(60*60), (secondsToGo/60)%60, secondsToGo%60);
@@ -1515,16 +1518,16 @@ ShareFileTransfer::DrawItem(BView* lv, BRect itemRect, bool /*complete*/)
 				}
 			} else {
 				if (_isAccepting)
-					text = str(STR_AWAITING_CALLBACK);
+					text = B_TRANSLATE(STR_AWAITING_CALLBACK);
 				else if (_isConnecting)
-					text = str(STR_CONNECTING);
+					text = B_TRANSLATE(STR_CONNECTING);
 				else if (_isFinished) {
 					if (_wasConnected)
-						text = (_fileSet.GetNumItems() == 0) ? str(STR_DOWNLOAD_COMPLETE) : str(STR_DOWNLOAD_ABORTED);
+						text = (_fileSet.GetNumItems() == 0) ? B_TRANSLATE(STR_DOWNLOAD_COMPLETE) : B_TRANSLATE(STR_DOWNLOAD_ABORTED);
 					else
-						text = str(STR_COULDNT_CONNECT);
+						text = B_TRANSLATE(STR_COULDNT_CONNECT);
 				} else
-					text = _uploadSession ? str(STR_PREPARING_TO_UPLOAD) : str(STR_PREPARING_TO_DOWNLOAD);
+					text = _uploadSession ? B_TRANSLATE(STR_PREPARING_TO_UPLOAD) : B_TRANSLATE(STR_PREPARING_TO_DOWNLOAD);
 			}
 		}
 
@@ -1536,7 +1539,7 @@ ShareFileTransfer::DrawItem(BView* lv, BRect itemRect, bool /*complete*/)
 			}
 		}
 		char line2[64];
-		sprintf(line2, "(%i/%i) %s ", _currentFileIndex, _origFileSetSize, _uploadSession?str(STR_TO):str(STR_FROM));
+		sprintf(line2, "(%i/%i) %s ", _currentFileIndex, _origFileSetSize, _uploadSession?B_TRANSLATE(STR_TO):B_TRANSLATE(STR_FROM));
 		String line2Str(line2);
 		line2Str += _displayRemoteUserName;
 		line2Str += " (";
@@ -1623,7 +1626,7 @@ ShareFileTransfer::BeginTransfer()
 				if (port > 0)
 					((ShareWindow*)Looper())->SendConnectBackRequestMessage(_remoteSessionID(), port);
 				else
-					((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, str(STR_ERROR_STARTING_DOWNLOAD_NO_ACCEPT_PORT));
+					((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_ERROR_STARTING_DOWNLOAD_NO_ACCEPT_PORT));
 			} else
 				startConnect = true;
 		}
@@ -1634,9 +1637,9 @@ ShareFileTransfer::BeginTransfer()
 					&& (_mtt->AddNewConnectSession(_remoteHostName(), _remotePort, GetTransferSessionRef()) == B_NO_ERROR))
 					_isConnecting = true;
 				else
-					((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, str(STR_ERROR_STARTING_DELAYED_CONNECT));
+					((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_ERROR_STARTING_DELAYED_CONNECT));
 			} else
-				((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, str(STR_ERROR_STARTING_DELAYED_CONNECT_NO_TRANSCEIVER_THREAD));
+				((ShareWindow*)Looper())->LogMessage(LOG_ERROR_MESSAGE, B_TRANSLATE(STR_ERROR_STARTING_DELAYED_CONNECT_NO_TRANSCEIVER_THREAD));
 		}
 		((ShareWindow *)Looper())->RefreshTransferItem(this);
 	}

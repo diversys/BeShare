@@ -5,6 +5,9 @@
 #include "ShareStrings.h"
 #include "ShareWindow.h"
 
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "RemoteUserItem"
+
 namespace beshare {
 	
 #define CLASSNAME "RemoteUserItem"
@@ -25,17 +28,17 @@ RemoteUserItem::RemoteUserItem(ShareWindow* owner, const char* sessionID)
 	:
 	_shareWindow(owner), 
 	_sessionID(sessionID), 
-	_handle(str(STR_ANONYMOUS)), 
-	_displayHandle(str(STR_ANONYMOUS)), 
+	_handle(B_TRANSLATE(STR_ANONYMOUS)),
+	_displayHandle(B_TRANSLATE(STR_ANONYMOUS)),
 	_port(0), _firewalled(false), 
 	_isBot(false), 
 	_supportsPartialHash(false), 
-	_bandwidthLabel(str(STR_UNKNOWN)), 
+	_bandwidthLabel(B_TRANSLATE(STR_UNKNOWN)),
 	_bandwidth(0), 
 	_installID(0)
 {
 	String text = GetUserString();
-	text += str(STR_IS_NOW_CONNECTED); 
+	text += B_TRANSLATE(STR_IS_NOW_CONNECTED);
 	_shareWindow->LogMessage(LOG_USER_EVENT_MESSAGE, text());
 
 	SetColumnContent(REMOTE_USER_COLUMN_HANDLE, _displayHandle(), false, false);
@@ -50,7 +53,7 @@ RemoteUserItem::~RemoteUserItem()
 {
 	TRACE_REMOTEUSERITEM(("%s::%s : begin\n",CLASSNAME, __func__));
 	String text = GetUserString();
-	text += str(STR_HAS_DISCONNECTED);
+	text += B_TRANSLATE(STR_HAS_DISCONNECTED);
 	_shareWindow->LogMessage(LOG_USER_EVENT_MESSAGE, text());
 	ClearFiles();
 }
@@ -60,11 +63,11 @@ String
 RemoteUserItem::GetUserString() const
 {
 	TRACE_REMOTEUSERITEM(("%s::%s : begin\n",CLASSNAME, __func__));
-	String text(str(STR_USER_NUMBER));
+	String text(B_TRANSLATE(STR_USER_NUMBER));
 	text += _sessionID;
 
-	if (!_handle.Equals(str(STR_ANONYMOUS))) {
-		text += str(STR_AKA);
+	if (!_handle.Equals(B_TRANSLATE(STR_ANONYMOUS))) {
+		text += B_TRANSLATE(STR_AKA);
 		text += _handle();
 		text += ")";
 	}
@@ -78,7 +81,7 @@ RemoteUserItem::SetHandle(const char* handle, const char* displayHandle)
 	TRACE_REMOTEUSERITEM(("%s::%s : begin\n",CLASSNAME, __func__));
 	if ((strcmp(handle, _handle())) || (strcmp(displayHandle, _displayHandle()))) {
 		String text = GetUserString();
-		text += str(STR_IS_NOW_KNOWN_AS);
+		text += B_TRANSLATE(STR_IS_NOW_KNOWN_AS);
 		text += handle;
 		_shareWindow->LogMessage(LOG_USER_EVENT_MESSAGE, text());
 		
@@ -102,7 +105,7 @@ RemoteUserItem::SetStatus(const char * status, const char * displayStatus)
 {
 	TRACE_REMOTEUSERITEM(("%s::%s : begin\n",CLASSNAME, __func__));
 	String text = GetUserString();
-	text += str(STR_IS_NOW);
+	text += B_TRANSLATE(STR_IS_NOW);
 	text += status;
 	_shareWindow->LogMessage(LOG_USER_EVENT_MESSAGE, text());
 
